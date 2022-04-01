@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Outfit Generator</string>
     <string name="random_button">Randomize!</string>
+    <string name="save_button">Save!</string>
     <string name="collection_view">View Collection!</string>
     <string name="upload">Upload!</string>
+    <string name="clothing_title_hint"> Enter a title for the clothing!</string>
 </resources>
