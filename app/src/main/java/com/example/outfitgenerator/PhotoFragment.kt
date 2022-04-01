@@ -12,6 +12,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.EditText
 
+private const val TAG = "PhotoFragment"
+
 class PhotoFragment: Fragment() {
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
