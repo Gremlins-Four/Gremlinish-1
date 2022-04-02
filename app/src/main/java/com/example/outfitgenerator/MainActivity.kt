@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         uploadbutton.setOnClickListener {
             val fragment = PhotoFragment()
-            supportFragmentManager.beginTransaction().add(androidx.fragment.R.id.fragment_container_view_tag, fragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
         }
 
     }
