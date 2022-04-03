@@ -1,15 +1,15 @@
 package com.example.outfitgenerator
 
 import androidx.annotation.StringRes
+import java.util.*
 
-data class Categorize(@StringRes val textReID: Int, val hat:Boolean? = null,
-                        val shirt:Boolean? = null, val pants:Boolean? = null,
-                        val shoes:Boolean? = null) {
+data class Categorize(val id: UUID = UUID.randomUUID(), var name: String = "", var hat:Boolean? = null,
+                        var shirt:Boolean? = null, var pants:Boolean? = null,
+                        var shoes:Boolean? = null) {
 
 }
 
 
 
-// @StringRes val textReID will be the name of the article of clothing entered by the user,
-// the user will choose which category the image belongs ina
+// Using categorize for the Image Capture fragment
 
