@@ -22,12 +22,13 @@ class FirstFragment: Fragment() {
     private lateinit var uploadbutton: Button
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
-    public var checkbool = false
+
     /**
      * Required interface for hosting activities
      */
     interface Callbacks {
         fun startPhotoFragment()
+        fun startCollectionViewFragment()
     }
     private var callbacks: Callbacks? = null
 
@@ -48,11 +49,14 @@ class FirstFragment: Fragment() {
 
 
         uploadbutton = view.findViewById(R.id.button8)
+        collectionbutton = view.findViewById(R.id.button6)
 
 
 
 
-
+        collectionbutton.setOnClickListener {
+            callbacks?.startCollectionViewFragment()
+        }
 
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()

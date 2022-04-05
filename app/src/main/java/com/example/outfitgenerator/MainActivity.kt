@@ -31,4 +31,10 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
 
     }
 
+    override fun startCollectionViewFragment() {
+        val fragment2 = CollectionViewFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment2).addToBackStack(null).commit()
+
+    }
+
 }
