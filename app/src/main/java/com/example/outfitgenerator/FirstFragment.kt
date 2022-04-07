@@ -48,8 +48,8 @@ class FirstFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_first, container, false)
 
 
-        uploadbutton = view.findViewById(R.id.button8)
-        collectionbutton = view.findViewById(R.id.button6)
+        uploadbutton = view.findViewById(R.id.upload_button)
+        collectionbutton = view.findViewById(R.id.closet_button)
 
 
 
