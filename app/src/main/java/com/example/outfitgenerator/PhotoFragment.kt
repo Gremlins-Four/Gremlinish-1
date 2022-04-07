@@ -1,5 +1,6 @@
 package com.example.outfitgenerator
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,16 @@ open class PhotoFragment: Fragment() {
     /**
      * Required interface for hosting activities
      */
+    interface Callbacks {
+        fun startFirstFragment()
+    }
+    private var callbacks: Callbacks? = null
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
     }
@@ -34,10 +45,9 @@ open class PhotoFragment: Fragment() {
 
 
         cancelbutton.setOnClickListener {
+            callbacks?.startFirstFragment()
             // Return to main layout
         }
-
-
         return view
 
     }
@@ -72,15 +82,15 @@ open class PhotoFragment: Fragment() {
     }
 
 
-
-
-
     //add a listener to the Edit Text View Widget we just created
     override fun onStart() {
         super.onStart()
         //left blank
     }
-
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
 
 
     }
@@ -107,6 +117,10 @@ open class PhotoFragment: Fragment() {
         override fun afterTextChanged(sequence: Editable?) {
             //leave blank
         }
+
+
+
+
     }
 
 
