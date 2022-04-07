@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
+class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +36,12 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
     override fun startCollectionViewFragment() {
         val fragment2 = CollectionViewFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment2).addToBackStack(null).commit()
+
+    }
+
+    override fun startFirstFragment() {
+        val fragment3 = FirstFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment3).addToBackStack(null).commit()
 
     }
 
