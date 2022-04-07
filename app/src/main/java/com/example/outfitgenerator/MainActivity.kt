@@ -3,7 +3,9 @@ package com.example.outfitgenerator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.TextView
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
@@ -36,5 +38,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment2).addToBackStack(null).commit()
 
     }
+
+
 
 }
