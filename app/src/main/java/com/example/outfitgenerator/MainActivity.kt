@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
 
     }
 
+    override fun cameraTime(){
+
+    }
+
 
 
 }
