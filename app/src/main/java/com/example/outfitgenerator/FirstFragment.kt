@@ -22,7 +22,6 @@ class FirstFragment: Fragment() {
     private lateinit var uploadbutton: Button
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
-
     /**
      * Required interface for hosting activities
      */
@@ -37,8 +36,6 @@ class FirstFragment: Fragment() {
         super.onAttach(context)
         callbacks = context as Callbacks?
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -54,10 +51,10 @@ class FirstFragment: Fragment() {
 
 
 
+
         collectionbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
         }
-
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()
         }

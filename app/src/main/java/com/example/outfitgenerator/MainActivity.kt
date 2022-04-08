@@ -1,13 +1,27 @@
 package com.example.outfitgenerator
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
+import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import java.util.jar.Manifest
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.os.PersistableBundle
+import android.widget.*
 
+private const val TAG = "MainActivity"
+class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
+    private lateinit var iv_image: ImageView
+    companion object{
+        private const val CAMERA_PERMISSION_CODE = 1
+        private const val CAMERA_REQUEST_CODE = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,5 +50,45 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment2).addToBackStack(null).commit()
 
     }
+
+    override fun startFirstFragment() {
+        val fragment3 = FirstFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment3).addToBackStack(null).commit()
+
+    }
+
+    override fun cameraTime(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED ){
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, CAMERA_REQUEST_CODE)
+        } else{
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+        }
+
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == CAMERA_PERMISSION_CODE) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            } else{
+                Toast.makeText(this, "Access Denied", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                val thumbNail: Bitmap = data!!.extras!!.get("data") as Bitmap
+                iv_image.setImageBitmap(thumbNail)
+            }
+
+        }
+    }
+
+
+
 
 }
