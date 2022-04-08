@@ -1,5 +1,6 @@
 package com.example.outfitgenerator
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +14,22 @@ import android.widget.TextView
 import android.widget.EditText
 
 class CollectionViewFragment: Fragment() {
+    private lateinit var xButton: Button
+
+    /**
+     * Required interface for hosting activities
+     */
+    interface Callbacks {
+        fun startFirstFragment()
+    }
+    private var callbacks: Callbacks? = null
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -22,7 +39,12 @@ class CollectionViewFragment: Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_collectionview, container, false)
+        xButton=view.findViewById(R.id.xbutton)
 
+        xButton.setOnClickListener {
+            callbacks?.startFirstFragment()
+            // Return to main layout
+        }
 
 
         return view
@@ -33,6 +55,10 @@ class CollectionViewFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         //left blank
+    }
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     val titleWatcher = object : TextWatcher {
@@ -53,5 +79,6 @@ class CollectionViewFragment: Fragment() {
         override fun afterTextChanged(sequence: Editable?) {
             //leave blank
         }
+
     }
 }
