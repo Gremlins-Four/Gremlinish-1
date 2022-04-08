@@ -16,7 +16,7 @@ import android.os.PersistableBundle
 import android.widget.*
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
+class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks {
     private lateinit var iv_image: ImageView
     companion object{
         private const val CAMERA_PERMISSION_CODE = 1

@@ -7,78 +7,76 @@
     tools:context=".MainActivity">
 
 
-
-
-
     <EditText
         android:id="@+id/clothing_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="321dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/clothing_title_hint"
-        app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295">
+        app:layout_constraintTop_toBottomOf="@+id/camera_button"
+        app:layout_constraintBottom_toTopOf="@+id/radiogroup">
 
     </EditText>
 
     <Button
         android:id="@+id/button10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="374dp"
+        android:layout_height="59dp"
         android:text="@string/save_button"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintVertical_bias="0.976"
         tools:ignore="DuplicateSpeakableTextCheck" />
-
 
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel_button"
+        android:layout_width="38dp"
+        android:layout_height="46dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/dark_grey"
+        android:text="X"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/camera_button"
-        android:layout_width="95dp"
-        android:layout_height="42dp"
-        android:text="cam"
+        android:layout_width="157dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/dark_grey"
+        android:text="take photo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_image" />
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="92dp"
-        android:layout_height="111dp"
+        android:layout_width="91dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="76dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/radiogroup"
+        android:layout_width="81dp"
+        android:layout_height="290dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clothing_title"
-        app:layout_constraintVertical_bias="0.6">
+        app:layout_constraintVertical_bias="1.0">
 
         <RadioButton
             android:id="@+id/radio_hat"
