@@ -14,11 +14,13 @@ open class PhotoFragment: Fragment() {
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
     private lateinit var cancelbutton: Button
+    private lateinit var camerabutton: Button
     /**
      * Required interface for hosting activities
      */
     interface Callbacks {
         fun startFirstFragment()
+        fun cameraTime()
     }
     private var callbacks: Callbacks? = null
 
@@ -39,6 +41,7 @@ open class PhotoFragment: Fragment() {
         titleField = view.findViewById(R.id.clothing_title)
 
         savebutton = view.findViewById(R.id.button10)
+        camerabutton = view.findViewById(R.id.camera_button)
 
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
@@ -47,6 +50,9 @@ open class PhotoFragment: Fragment() {
         cancelbutton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
+        }
+        camerabutton.setOnClickListener{
+            callbacks?.cameraTime()
         }
         return view
 
