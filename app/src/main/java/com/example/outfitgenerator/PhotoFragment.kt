@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import android.widget.Spinner
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 
 open class PhotoFragment: Fragment() {
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
     private lateinit var cancelbutton: Button
     private lateinit var camerabutton: Button
+    private lateinit var spinner: Spinner
     /**
      * Required interface for hosting activities
      */
@@ -46,7 +50,18 @@ open class PhotoFragment: Fragment() {
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
 
+        spinner=view.findViewById<Spinner>(R.id.spinner)
 
+        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
+        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position).toString()
+            }
+        }
         cancelbutton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
@@ -60,7 +75,7 @@ open class PhotoFragment: Fragment() {
 
 
 
-    fun onRadioButtonClicked(view: View) {
+    /*fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             // Is the button now checked?
             val checked = view.isChecked
@@ -86,7 +101,7 @@ open class PhotoFragment: Fragment() {
             }
         }
     }
-
+*/
 
     //add a listener to the Edit Text View Widget we just created
     override fun onStart() {

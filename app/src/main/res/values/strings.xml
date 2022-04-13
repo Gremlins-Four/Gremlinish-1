@@ -11,6 +11,14 @@
     <string name="shirt">Shirt</string>
     <string name="hat">Hat</string>
 
+    <string-array name="dropdownmenu">
+        <item>Hat</item>
+        <item>Shirt</item>
+        <item>Pants</item>
+        <item>Shoes</item>
+    </string-array>
+
+
 
 
 </resources>

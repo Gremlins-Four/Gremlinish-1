@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/camera_button"
-        app:layout_constraintBottom_toTopOf="@+id/radiogroup">
+        app:layout_constraintBottom_toTopOf="@+id/spinner">
 
     </EditText>
 
@@ -67,45 +67,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radiogroup"
-        android:layout_width="81dp"
-        android:layout_height="290dp"
-        android:orientation="vertical"
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/button10"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothing_title"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/clothing_title">
 
-        <RadioButton
-            android:id="@+id/radio_hat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/hat" />
-
-        <RadioButton
-            android:id="@+id/radio_shirt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/shirt" />
-
-        <RadioButton
-            android:id="@+id/radio_pants"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/pants" />
-
-        <RadioButton
-            android:id="@+id/radio_shoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/shoes" />
-    </RadioGroup>
+    </Spinner>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
