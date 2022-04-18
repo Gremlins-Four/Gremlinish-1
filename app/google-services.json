@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "404054404128",
+    "project_id": "outfit-generator-425dd",
+    "storage_bucket": "outfit-generator-425dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404054404128:android:453c2924e35d164ab12045",
+        "android_client_info": {
+          "package_name": "com.example.outfitgenerator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404054404128-lbdmrie65qq3l2p0hfo0tdpt7igjtugt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRnM9J6ReGY6v8IbPkoC_GZ5EgLI7_1MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404054404128-lbdmrie65qq3l2p0hfo0tdpt7igjtugt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,7 +7,10 @@
     tools:context=".MainActivity">
 
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
     <EditText
@@ -53,9 +56,9 @@
         android:layout_height="42dp"
         android:text="cam"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_image" />
+        app:layout_constraintTop_toBottomOf="@+id/clothing_title" />
 
     <ImageView
         android:id="@+id/iv_image"
@@ -85,28 +88,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="@string/hat" />
+            android:text="@string/hat"
+            tools:ignore="OnClick" />
 
         <RadioButton
             android:id="@+id/radio_shirt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="@string/shirt" />
+            android:text="@string/shirt"
+            tools:ignore="OnClick" />
 
         <RadioButton
             android:id="@+id/radio_pants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="@string/pants" />
+            android:text="@string/pants"
+            tools:ignore="OnClick" />
 
         <RadioButton
             android:id="@+id/radio_shoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="@string/shoes" />
+            android:text="@string/shoes"
+            tools:ignore="OnClick" />
     </RadioGroup>
 
 

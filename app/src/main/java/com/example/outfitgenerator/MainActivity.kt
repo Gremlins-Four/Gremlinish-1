@@ -14,9 +14,12 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.PersistableBundle
 import android.widget.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
+    val CLOTHING_KEY = "clothes"
+    val TAG = "ClothingArticle"
     private lateinit var iv_image: ImageView
     companion object{
         private const val CAMERA_PERMISSION_CODE = 1
@@ -66,6 +69,23 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         }
 
     }
+
+    override fun saveClothes() {
+        val clothesView = findViewById<View>(R.id.clothing_title) as EditText
+        val clothesText = clothesView.text.toString()
+        if (clothesText.isEmpty()) {
+            return
+        }
+        val dataToSave: MutableMap<String, Any> = HashMap()
+        dataToSave[CLOTHING_KEY] = clothesText
+        mDocRef.set(dataToSave).addOnSuccessListener {
+            Log.d(
+                TAG,
+                "Clothing has been saved"
+            )
+        }.addOnFailureListener { e -> Log.w(TAG, "Clothing was not saved!", e) }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == CAMERA_PERMISSION_CODE) {
@@ -80,7 +100,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
-            if (requestCode == CAMERA_REQUEST_CODE) {
+            if (requestCode == CAMERA_PERMISSION_CODE && resultCode == RESULT_OK) {//CAMERA_REQUEST_CODE) {
                 val thumbNail: Bitmap = data!!.extras!!.get("data") as Bitmap
                 iv_image.setImageBitmap(thumbNail)
             }
@@ -90,5 +110,23 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
 
 
 
+    private val mDocRef = FirebaseFirestore.getInstance().document("sampleData/collection")
+
+    fun saveClothes(view: View?) {
+        val clothesView = view?.findViewById<View>(R.id.clothing_title) as EditText
+        val clothesText = clothesView.text.toString()
+        if (clothesText.isEmpty()) {
+            return
+        }
+        val dataToSave: MutableMap<String, Any> = HashMap()
+        dataToSave[CLOTHING_KEY] = clothesText
+        mDocRef.set(dataToSave).addOnSuccessListener {
+            Log.d(
+                TAG,
+                "Clothing has been saved"
+            )
+        }.addOnFailureListener { e -> Log.w(TAG, "Clothing was not saved!", e) }
+    }
 
 }
+

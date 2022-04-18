@@ -1,14 +1,22 @@
 package com.example.outfitgenerator
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+
+//import com.google.firebase.firestore.FirebaseFirestore
+
 
 open class PhotoFragment: Fragment() {
     private lateinit var savebutton: Button
@@ -21,6 +29,7 @@ open class PhotoFragment: Fragment() {
     interface Callbacks {
         fun startFirstFragment()
         fun cameraTime()
+        fun saveClothes()
     }
     private var callbacks: Callbacks? = null
 
@@ -31,6 +40,7 @@ open class PhotoFragment: Fragment() {
     }
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -46,6 +56,32 @@ open class PhotoFragment: Fragment() {
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
 
+        val database = FirebaseFirestore.getInstance().document("sampleData/collection")
+
+
+        fun saveToDatabase() {
+            var clothingTitle = titleField.getText().toString()
+
+            val newClothing = hashMapOf(
+                "title" to clothingTitle
+            )
+
+            //val toast1 = Toast.makeText(this,"Saving", Toast.LENGTH_LONG)
+            //toast1.show()
+
+            database.collection("Wardrobe")
+                .add(newClothing)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(ContentValues.TAG, "ClothingSnapshot added with ID: ${documentReference}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding clothing", e)
+                }
+            //val toast2 = Toast.makeText(this, "Done", Toast.LENGTH_LONG)
+            //toast2.show()
+        }
+
+
 
         cancelbutton.setOnClickListener {
             callbacks?.startFirstFragment()
@@ -54,52 +90,35 @@ open class PhotoFragment: Fragment() {
         camerabutton.setOnClickListener{
             callbacks?.cameraTime()
         }
+
+        savebutton.setOnClickListener {
+            saveToDatabase()
+        }
+
+
+
         return view
 
     }
 
 
 
-    fun onRadioButtonClicked(view: View) {
-        if (view is RadioButton) {
-            // Is the button now checked?
-            val checked = view.isChecked
 
-            // Check which radio button was clicked
-            when (view.getId()) {
-                R.id.radio_hat ->
-                    if (checked) {
-                        // Object is classified as a hat
-                    }
-                R.id.radio_shirt ->
-                    if (checked) {
-                        // Object is classified as a shirt
-                    }
-                R.id.radio_pants ->
-                    if (checked) {
-                        // Object is classified as pants
-                    }
-                R.id.radio_shoes ->
-                    if (checked) {
-                        // Object is classified as shoes
-                    }
-            }
-        }
-    }
+
 
 
     //add a listener to the Edit Text View Widget we just created
-    override fun onStart() {
-        super.onStart()
+   // override fun onStart() {
+     //   super.onStart()
         //left blank
-    }
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null
-    }
+  //  }
+   // override fun onDetach() {
+     //   super.onDetach()
+      //  callbacks = null
+   // }
 
 
-    }
+    //}
 
     val titleWatcher = object: TextWatcher {
         override fun beforeTextChanged(
@@ -128,6 +147,7 @@ open class PhotoFragment: Fragment() {
 
 
     }
+}
 
 
 

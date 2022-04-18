@@ -9,8 +9,8 @@
     <string name="shoes"> Shoes</string>
     <string name="pants"> Pants</string>
     <string name="shirt"> Shirt</string>
-    <string name="hat" > Hat</string>
-
+    <string name="hat"> Hat</string>
+    <string name="text_label"> Saving</string>
 
 
 </resources>
