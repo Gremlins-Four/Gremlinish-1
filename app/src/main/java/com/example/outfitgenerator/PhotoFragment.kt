@@ -14,8 +14,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-
+import android.widget.Spinner
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 //import com.google.firebase.firestore.FirebaseFirestore
+
 
 
 open class PhotoFragment: Fragment() {
@@ -23,6 +26,7 @@ open class PhotoFragment: Fragment() {
     private lateinit var titleField: EditText
     private lateinit var cancelbutton: Button
     private lateinit var camerabutton: Button
+    private lateinit var spinner: Spinner
     /**
      * Required interface for hosting activities
      */
@@ -56,6 +60,7 @@ open class PhotoFragment: Fragment() {
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
 
+
         val database = FirebaseFirestore.getInstance().document("sampleData/collection")
 
 
@@ -81,8 +86,19 @@ open class PhotoFragment: Fragment() {
             //toast2.show()
         }
 
+          spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
+        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
+        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position).toString()
+            }
+        }
         cancelbutton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
@@ -100,9 +116,6 @@ open class PhotoFragment: Fragment() {
         return view
 
     }
-
-
-
 
 
 

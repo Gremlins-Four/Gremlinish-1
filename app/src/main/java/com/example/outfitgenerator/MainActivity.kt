@@ -17,9 +17,11 @@ import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 private const val TAG = "MainActivity"
+
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
+  
     private lateinit var iv_image: ImageView
     companion object{
         private const val CAMERA_PERMISSION_CODE = 1

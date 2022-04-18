@@ -1,16 +1,25 @@
 <resources>
     <string name="app_name">Outfit Generator</string>
-    <string name="random_button">Randomize!</string>
-    <string name="save_button">Save!</string>
+    <string name="random_button">Randomize</string>
+    <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
-    <string name="collection_view">View Collection!</string>
-    <string name="upload">Upload!</string>
-    <string name="clothing_title_hint"> Enter a title for the clothing!</string>
-    <string name="shoes"> Shoes</string>
-    <string name="pants"> Pants</string>
-    <string name="shirt"> Shirt</string>
-    <string name="hat"> Hat</string>
-    <string name="text_label"> Saving</string>
+
+    <string name="collection_view">View Collection</string>
+    <string name="upload">Upload</string>
+    <string name="clothing_title_hint">Item name</string>
+    <string name="shoes">Shoes</string>
+    <string name="pants">Pants</string>
+    <string name="shirt">Shirt</string>
+    <string name="hat">Hat</string>
+
+    <string-array name="dropdownmenu">
+        <item>Hat</item>
+        <item>Shirt</item>
+        <item>Pants</item>
+        <item>Shoes</item>
+    </string-array>
+
+
 
 
 </resources>
