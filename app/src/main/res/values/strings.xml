@@ -4,7 +4,7 @@
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
 
-    <string name="collection_view">View Collection</string>
+    <string name="collection_view">Closet</string>
     <string name="upload">Upload</string>
     <string name="clothing_title_hint">Item name</string>
     <string name="shoes">Shoes</string>
