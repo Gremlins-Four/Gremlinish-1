@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
+class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
   
