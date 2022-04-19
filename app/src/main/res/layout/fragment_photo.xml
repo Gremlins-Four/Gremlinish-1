@@ -10,19 +10,19 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRVImages"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/clothing_title"
         android:layout_width="321dp"
         android:layout_height="55dp"
-        android:layout_marginTop="20dp"
         android:hint="@string/clothing_title_hint"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/camera_button"
-        app:layout_constraintBottom_toTopOf="@+id/spinner">
+        app:layout_constraintTop_toBottomOf="@+id/iv_image">
 
     </EditText>
 
@@ -53,8 +53,8 @@
 
     <Button
         android:id="@+id/camera_button"
-        android:layout_width="157dp"
-        android:layout_height="45dp"
+        android:layout_width="159dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/dark_grey"
         android:text="take photo"
@@ -78,9 +78,10 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="229dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clothing_title">
 
