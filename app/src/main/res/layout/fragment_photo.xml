@@ -51,16 +51,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/camera_button"
         android:layout_width="157dp"
         android:layout_height="45dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/dark_grey"
         android:text="take photo"
         app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.177"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clothing_title" />
+
+    <Button
+        android:id="@+id/insert_button"
+        android:layout_width="157dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/dark_grey"
+        android:text="insert photo"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.877"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clothing_title" />
@@ -85,7 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/clothing_title">
 
     </Spinner>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
