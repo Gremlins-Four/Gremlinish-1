@@ -159,11 +159,6 @@ open class PhotoFragment: Fragment() {
                 iv_image.setImageURI(selectedImage)
 
 
-
-
-
-
-
             }
 
             }
