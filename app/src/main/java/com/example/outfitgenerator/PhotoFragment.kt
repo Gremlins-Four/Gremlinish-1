@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,6 +16,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.IOException
 
 
 //import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +26,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 open class PhotoFragment: Fragment() {
+
+    var storage: FirebaseStorage? = null
+    var storageReference: StorageReference? = null
+
+    private val PICK_IMAGE_REQUEST = 22
 
     private val RESULT_LOAD_IMAGE = 1
     private lateinit var iv_image: ImageView
@@ -56,6 +63,9 @@ open class PhotoFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_photo, container, false)
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage!!.getReference()
 
         iv_image = view.findViewById(R.id.iv_image)
 
@@ -136,6 +146,7 @@ open class PhotoFragment: Fragment() {
         insertbutton.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+            SelectImage()
 
         }
 
@@ -147,11 +158,17 @@ open class PhotoFragment: Fragment() {
 
                 iv_image.setImageURI(selectedImage)
 
-                // selectedImage.toString()
+
+
+
+
+
 
             }
 
             }
+
+
 
 
 
@@ -161,6 +178,17 @@ open class PhotoFragment: Fragment() {
         return view
 
     }
+
+
+    private fun SelectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Image from here..."),
+            PICK_IMAGE_REQUEST)
+    }
+
 
 
 
