@@ -7,22 +7,17 @@
     tools:context=".MainActivity">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVImages"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 
     <EditText
         android:id="@+id/clothing_title"
         android:layout_width="321dp"
         android:layout_height="55dp"
-        android:layout_marginTop="20dp"
         android:hint="@string/clothing_title_hint"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/camera_button"
-        app:layout_constraintBottom_toTopOf="@+id/spinner">
+        app:layout_constraintTop_toBottomOf="@+id/iv_image">
 
     </EditText>
 
@@ -93,9 +88,10 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="229dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clothing_title">
 
