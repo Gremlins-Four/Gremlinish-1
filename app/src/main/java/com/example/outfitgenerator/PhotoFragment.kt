@@ -2,31 +2,37 @@ package com.example.outfitgenerator
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import android.widget.Spinner
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+
+
 //import com.google.firebase.firestore.FirebaseFirestore
 
 
 
 open class PhotoFragment: Fragment() {
+
+    private val RESULT_LOAD_IMAGE = 1
+    private lateinit var iv_image: ImageView
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
     private lateinit var cancelbutton: Button
     private lateinit var camerabutton: Button
     private lateinit var spinner: Spinner
+    private lateinit var insertbutton: Button
     /**
      * Required interface for hosting activities
      */
@@ -51,6 +57,9 @@ open class PhotoFragment: Fragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_photo, container, false)
 
+        iv_image = view.findViewById(R.id.iv_image)
+
+        insertbutton = view.findViewById(R.id.insert_button)
 
         titleField = view.findViewById(R.id.clothing_title)
 
@@ -65,11 +74,16 @@ open class PhotoFragment: Fragment() {
 
 
         fun saveToDatabase() {
+
             var clothingTitle = titleField.getText().toString()
 
             val newClothing = hashMapOf(
                 "title" to clothingTitle
             )
+
+            // val newImage = hashMapof
+            // or Bitmap???
+
 
             //val toast1 = Toast.makeText(this,"Saving", Toast.LENGTH_LONG)
             //toast1.show()
@@ -85,6 +99,14 @@ open class PhotoFragment: Fragment() {
             //val toast2 = Toast.makeText(this, "Done", Toast.LENGTH_LONG)
             //toast2.show()
         }
+
+
+
+
+
+
+
+
 
           spinner=view.findViewById<Spinner>(R.id.spinner)
 
@@ -110,6 +132,29 @@ open class PhotoFragment: Fragment() {
         savebutton.setOnClickListener {
             saveToDatabase()
         }
+
+        insertbutton.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+
+        }
+
+
+
+        fun onActivityResult(requestCode: Int, data: Intent?) {
+            if (requestCode == RESULT_LOAD_IMAGE && data != null) {
+                val selectedImage: Uri? = data.data
+
+                iv_image.setImageURI(selectedImage)
+
+                // selectedImage.toString()
+
+            }
+
+            }
+
+
+
 
 
 

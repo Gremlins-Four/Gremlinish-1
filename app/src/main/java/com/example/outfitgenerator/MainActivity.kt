@@ -11,7 +11,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.jar.Manifest
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
 import android.os.PersistableBundle
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,8 +24,12 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
+
+    // val photos: ArrayList<PhotoSave> = ArrayList<PhotoSave>()
   
     private lateinit var iv_image: ImageView
+
+
     companion object{
         private const val CAMERA_PERMISSION_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
@@ -32,7 +39,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        // iv_image = findViewById(R.id.iv_image)
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
@@ -62,6 +69,8 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
 
     }
 
+
+
     override fun cameraTime(){
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED ){
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -71,6 +80,20 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     override fun saveClothes() {
         val clothesView = findViewById<View>(R.id.clothing_title) as EditText
@@ -88,6 +111,8 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         }.addOnFailureListener { e -> Log.w(TAG, "Clothing was not saved!", e) }
     }
 
+
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == CAMERA_PERMISSION_CODE) {
@@ -99,6 +124,8 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
             }
         }
     }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
