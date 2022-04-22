@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.16354166666666667" />
         <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/clothing_item.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_collectionview.xml" value="0.1408514492753623" />
+        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_first.xml" value="0.1" />
         <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_photo.xml" value="0.1408514492753623" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
@@ -22,7 +23,6 @@
         <entry key="app/src/main/res/layout/fragment_photo.xml" value="0.21809692382812498" />
         <entry key="app/src/main/res/layout/list_item_crime.xml" value="0.1" />
         <entry key="app/src/main/res/menu/fragment_crime_list.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/xml/file_paths.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/xml/files.xml" value="0.13728470111448834" />
       </map>
     </option>

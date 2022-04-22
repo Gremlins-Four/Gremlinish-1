@@ -24,7 +24,6 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
 import com.google.firebase.storage.StorageReference
-import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -165,34 +164,30 @@ open class PhotoFragment: Fragment() {
 
 
 
-          spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
-        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
-        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
+
+
+            cancelbutton.setOnClickListener {
+                callbacks?.startFirstFragment()
+                // Return to main layout
+            }
+            camerabutton.setOnClickListener {
+                callbacks?.cameraTime()
             }
 
+            savebutton.setOnClickListener {
+                saveToDatabase()
+            }
 
-        cancelbutton.setOnClickListener {
-            callbacks?.startFirstFragment()
-            // Return to main layout
-        }
-        camerabutton.setOnClickListener{
-            callbacks?.cameraTime()
-        }
+            insertbutton.setOnClickListener {
+                val galleryIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+                SelectImage()
 
-        savebutton.setOnClickListener {
-            saveToDatabase()
-        }
-
-        insertbutton.setOnClickListener {
-            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
-            SelectImage()
-
-        }
+            }
 
 
 
@@ -273,6 +268,8 @@ open class PhotoFragment: Fragment() {
 
     }
 }
+
+
 
 
 
