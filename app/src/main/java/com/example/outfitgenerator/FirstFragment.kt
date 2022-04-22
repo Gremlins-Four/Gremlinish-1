@@ -47,11 +47,14 @@ class FirstFragment: Fragment() {
 
         uploadbutton = view.findViewById(R.id.upload_button)
         collectionbutton = view.findViewById(R.id.closet_button)
+        randombutton = view.findViewById(R.id.random_button)
 
 
 
 
+        randombutton.setOnClickListener {
 
+        }
         collectionbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
         }
