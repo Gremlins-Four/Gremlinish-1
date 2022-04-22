@@ -22,6 +22,7 @@ class CollectionViewFragment: Fragment() {
     private var adapter: CollectionAdapter? = null
 
 
+
     private val collectionViewModel: CollectionViewModel by lazy {
         ViewModelProviders.of(this).get(CollectionViewModel::class.java)
     }
@@ -101,13 +102,13 @@ class CollectionViewFragment: Fragment() {
                 //This function sets up the individual texts and image for each item to be displayed.
                 clothingTitleTextView.text = "Clothing Title"
                 //clothingTitleTextView.text = clothing2.piece
-                if(clothing2.hat == "Hat"){
+                if(clothing2.tag == "Hat"){
                     clothingTagTextView.text = "Hat"
                 }
-                else if(clothing2.shirt == "Shirt"){
+                else if(clothing2.tag == "Shirt"){
                     clothingTagTextView.text = "Shirt"
                 }
-                else if(clothing2.pants == "Pants"){
+                else if(clothing2.tag == "Pants"){
                     clothingTagTextView.text = "Pants"
                 }
                 else{
