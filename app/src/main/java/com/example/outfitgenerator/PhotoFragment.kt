@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
 import com.google.firebase.storage.StorageReference
+//import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -39,11 +40,9 @@ open class PhotoFragment: Fragment() {
     private lateinit var iv_image: ImageView
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
-    private lateinit var cancelbutton: Button
+    private lateinit var cancelbutton: ImageButton
     private lateinit var camerabutton: Button
     private lateinit var spinner: Spinner
-
-    private lateinit var item: String
     private lateinit var imageView: ImageView
     private lateinit var insertbutton: Button
     /**
@@ -53,6 +52,7 @@ open class PhotoFragment: Fragment() {
         fun startFirstFragment()
         fun cameraTime()
         fun saveClothes()
+        fun startCollectionViewFragment()
     }
     private var callbacks: Callbacks? = null
 
@@ -102,26 +102,12 @@ open class PhotoFragment: Fragment() {
         insertbutton = view.findViewById(R.id.insert_button)
 
         titleField = view.findViewById(R.id.clothing_title)
+
         savebutton = view.findViewById(R.id.button10)
         camerabutton = view.findViewById(R.id.camera_button)
+
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
-        spinner=view.findViewById<Spinner>(R.id.spinner)
-        // Dropdown menu to select tag.
-
-        //var item: String
-
-
-        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
-        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                item = parent?.getItemAtPosition(position).toString()
-            }
-        }
 
 
         val database = FirebaseFirestore.getInstance().document("sampleData/collection")
@@ -130,9 +116,8 @@ open class PhotoFragment: Fragment() {
         fun saveToDatabase() {
 
             var clothingTitle = titleField.getText().toString()
-            var tagItem = item
+
             val newClothing = hashMapOf(
-                "tag" to tagItem,
                 "title" to clothingTitle
             )
 
@@ -163,31 +148,37 @@ open class PhotoFragment: Fragment() {
 
 
 
+          spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
-
-
-
-
-            cancelbutton.setOnClickListener {
-                callbacks?.startFirstFragment()
-                // Return to main layout
-            }
-            camerabutton.setOnClickListener {
-                callbacks?.cameraTime()
+        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
+        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
             }
 
-            savebutton.setOnClickListener {
-                saveToDatabase()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = parent?.getItemAtPosition(position).toString()
             }
+        }
+        cancelbutton.setOnClickListener {
+            callbacks?.startCollectionViewFragment()
+            // Return to main layout
+        }
+        camerabutton.setOnClickListener{
+            callbacks?.cameraTime()
+        }
 
-            insertbutton.setOnClickListener {
-                val galleryIntent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
-                SelectImage()
+        savebutton.setOnClickListener {
+            saveToDatabase()
+        }
 
-            }
+        insertbutton.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+            SelectImage()
+
+        }
 
 
 
@@ -268,8 +259,6 @@ open class PhotoFragment: Fragment() {
 
     }
 }
-
-
 
 
 

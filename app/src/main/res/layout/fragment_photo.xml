@@ -7,8 +7,6 @@
     tools:context=".MainActivity">
 
 
-
-
     <EditText
         android:id="@+id/clothing_title"
         android:layout_width="321dp"
@@ -34,18 +32,19 @@
         app:layout_constraintVertical_bias="0.976"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="38dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/dark_grey"
-        android:text="X"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/cancel_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/dark_grey"
+        android:src="?attr/homeAsUpIndicator"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="?attr/homeAsUpIndicator" />
 
     <Button
         android:id="@+id/camera_button"

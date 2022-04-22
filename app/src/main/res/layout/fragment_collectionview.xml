@@ -14,19 +14,29 @@
         android:layout_height="match_parent"/>
 
 
-
-
-    <Button
+    <ImageButton
         android:id="@+id/xbutton"
         android:layout_width="36dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="X"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@android:drawable/btn_dialog"
+        tools:srcCompat="@android:drawable/btn_dialog">
 
-    </Button>
+    </ImageButton>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

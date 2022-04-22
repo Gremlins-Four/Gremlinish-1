@@ -22,14 +22,14 @@ import kotlin.random.Random
 
 
 class FirstFragment: Fragment() {
-    private lateinit var uploadbutton: Button
+   // private lateinit var uploadbutton: Button
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
     /**
      * Required interface for hosting activities
      */
     interface Callbacks {
-        fun startPhotoFragment()
+        //fun startPhotoFragment()
         fun startCollectionViewFragment()
     }
     private var callbacks: Callbacks? = null
@@ -48,7 +48,7 @@ class FirstFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_first, container, false)
 
 
-        uploadbutton = view.findViewById(R.id.upload_button)
+        //uploadbutton = view.findViewById(R.id.upload_button)
         collectionbutton = view.findViewById(R.id.closet_button)
         randombutton = view.findViewById(R.id.random_button)
 
@@ -77,9 +77,9 @@ class FirstFragment: Fragment() {
         collectionbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
         }
-        uploadbutton.setOnClickListener {
-            callbacks?.startPhotoFragment()
-        }
+        //uploadbutton.setOnClickListener {
+        //    callbacks?.startPhotoFragment()
+        //}
         return view
 
     }
