@@ -60,13 +60,13 @@ class FirstFragment: Fragment() {
         val shoesTextView: TextView = view.findViewById(R.id.temp_shoes_text)
         randombutton.setOnClickListener {
             var listHat = listOf("Yellow Hat", "Blue Hat", "Red Hat", "Green Hat", "Baldus Hat")
-            var randHat: Int = Random.nextInt(0, 4)
+            var randHat: Int = Random.nextInt(0, 5)
             var listShirt = listOf("Yellow Shirt", "Blue Shirt", "Red Shirt", "Green Shirt", "Baldus Shirt")
-            var randShirt: Int = Random.nextInt(0, 4)
+            var randShirt: Int = Random.nextInt(0, 5)
             var listPants = listOf("Yellow Pants", "Blue Pants", "Red Pants", "Green Pants", "Baldus Pants")
-            var randPants: Int = Random.nextInt(0, 4)
+            var randPants: Int = Random.nextInt(0, 5)
             var listShoes = listOf("Yellow Shoes", "Blue Shoes", "Red Shoes", "Green Shoes", "Baldus Shoes")
-            var randShoes: Int = Random.nextInt(0, 4)
+            var randShoes: Int = Random.nextInt(0, 5)
             hatTextView.text = listHat[randHat]
             shirtTextView.text = listShirt[randShirt]
             pantsTextView.text = listPants[randPants]
