@@ -14,18 +14,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+//import com.google.firebase.database.DatabaseReference
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.ValueEventListener
 
 private const val TAG = "CollectionViewFragment"
+
+private lateinit var uploadbutton: FloatingActionButton
 
 class CollectionViewFragment: Fragment() {
     private lateinit var collectionRecyclerView: RecyclerView
     private var adapter: CollectionAdapter? = null
     //private lateinit var dataRef: DatabaseReference
     //private lateinit var clothingArray: ArrayList<Collection>
-    private lateinit var xButton: Button
+    private lateinit var xButton: ImageButton
 
 
 
@@ -40,6 +44,7 @@ class CollectionViewFragment: Fragment() {
      */
     interface Callbacks {
         fun startFirstFragment()
+        fun startPhotoFragment()
     }
 
     private var callbacks: Callbacks? = null
@@ -65,7 +70,11 @@ class CollectionViewFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_collectionview, container, false)
         xButton = view.findViewById(R.id.xbutton)
+        uploadbutton = view.findViewById(R.id.upload_button)
 
+        uploadbutton.setOnClickListener {
+            callbacks?.startPhotoFragment()
+        }
         xButton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
@@ -109,7 +118,8 @@ class CollectionViewFragment: Fragment() {
             val clothing2 = clothing[position]
             holder.apply {
                 //This function sets up the individual texts and image for each item to be displayed.
-                clothingTitleTextView.text = "Clothing Title"
+               // clothingTitleTextView.text = "Clothing Title"
+                clothingTitleTextView.text = "Blue Jorts"
                 //clothingTitleTextView.text = clothing2.piece
                 if(clothing2.tag == "Hat"){
                     clothingTagTextView.text = "Hat"
@@ -120,8 +130,10 @@ class CollectionViewFragment: Fragment() {
                 else if(clothing2.tag == "Pants"){
                     clothingTagTextView.text = "Pants"
                 }
+               // else{
+                 //   clothingTagTextView.text = "Shoes"
                 else{
-                    clothingTagTextView.text = "Shoes"
+                    clothingTagTextView.text="Pants"
                 }
 
 
