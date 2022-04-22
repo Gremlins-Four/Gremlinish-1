@@ -5,19 +5,25 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+    <ImageView
+        android:id="@+id/clothing_image"
+        android:layout_width="wrap_content"
+        android:layout_height="328dp"
+        android:src="@drawable/jorts" />
     <TextView
         android:id="@+id/clothing_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clothing Title"/>
+        android:text="Clothing Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textAlignment="viewEnd"/>
     <TextView
         android:id="@+id/clothing_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clothing Tag"/>
-    <ImageView
-        android:id="@+id/clothing_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/jorts"/>
+        android:text="Clothing Tag"
+        android:textAlignment="viewEnd"/>
+
+
 </LinearLayout>

@@ -118,7 +118,8 @@ class CollectionViewFragment: Fragment() {
             val clothing2 = clothing[position]
             holder.apply {
                 //This function sets up the individual texts and image for each item to be displayed.
-                clothingTitleTextView.text = "Clothing Title"
+               // clothingTitleTextView.text = "Clothing Title"
+                clothingTitleTextView.text = "Blue Jorts"
                 //clothingTitleTextView.text = clothing2.piece
                 if(clothing2.tag == "Hat"){
                     clothingTagTextView.text = "Hat"
@@ -129,8 +130,10 @@ class CollectionViewFragment: Fragment() {
                 else if(clothing2.tag == "Pants"){
                     clothingTagTextView.text = "Pants"
                 }
+               // else{
+                 //   clothingTagTextView.text = "Shoes"
                 else{
-                    clothingTagTextView.text = "Shoes"
+                    clothingTagTextView.text="Pants"
                 }
 
 
