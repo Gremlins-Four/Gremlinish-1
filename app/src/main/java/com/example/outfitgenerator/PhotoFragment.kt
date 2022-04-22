@@ -2,21 +2,24 @@ package com.example.outfitgenerator
 
 import android.content.ContentValues
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import android.widget.Spinner
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import java.io.IOException
+
 //import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -27,6 +30,7 @@ open class PhotoFragment: Fragment() {
     private lateinit var cancelbutton: Button
     private lateinit var camerabutton: Button
     private lateinit var spinner: Spinner
+    private lateinit var imageView: ImageView
     /**
      * Required interface for hosting activities
      */
@@ -45,6 +49,30 @@ open class PhotoFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
+
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+        var mStorageReference = FirebaseStorage.getInstance().reference.child("picture/sunset.JPG")
+
+        try {
+            val localFile = File.createTempFile("sunset", "jpg")
+            mStorageReference.getFile(localFile)
+                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+                    Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
+                        .show()
+                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                    imageView = view?.findViewById(R.id.iv_image)!!
+                    imageView.setImageBitmap(bitmap)
+                }).addOnFailureListener(OnFailureListener {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Error Ocurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                })
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -71,8 +99,8 @@ open class PhotoFragment: Fragment() {
                 "title" to clothingTitle
             )
 
-            //val toast1 = Toast.makeText(this,"Saving", Toast.LENGTH_LONG)
-            //toast1.show()
+            val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
+            toast1.show()
 
             database.collection("Wardrobe")
                 .add(newClothing)
@@ -82,8 +110,8 @@ open class PhotoFragment: Fragment() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding clothing", e)
                 }
-            //val toast2 = Toast.makeText(this, "Done", Toast.LENGTH_LONG)
-            //toast2.show()
+            val toast2 = Toast.makeText(requireActivity(), "Saved", Toast.LENGTH_LONG)
+            toast2.show()
         }
 
           spinner=view.findViewById<Spinner>(R.id.spinner)
