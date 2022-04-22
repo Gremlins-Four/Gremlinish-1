@@ -6,12 +6,10 @@
     android:layout_height="match_parent">
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/collection_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
     <ImageButton
@@ -37,6 +35,7 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:srcCompat="@android:drawable/ic_input_add" />
+        tools:srcCompat="@android:drawable/ic_input_add"
+        app:iconTint="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

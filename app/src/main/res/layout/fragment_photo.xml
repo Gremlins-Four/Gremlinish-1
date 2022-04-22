@@ -9,81 +9,82 @@
 
     <EditText
         android:id="@+id/clothing_title"
-        android:layout_width="321dp"
-        android:layout_height="55dp"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="10dp"
+
         android:hint="@string/clothing_title_hint"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_image">
+        app:layout_constraintTop_toBottomOf="@+id/insert_button">
 
     </EditText>
 
     <Button
         android:id="@+id/button10"
-        android:layout_width="374dp"
-        android:layout_height="59dp"
+        android:layout_width="393dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="2dp"
+        android:backgroundTint="@color/main_green"
         android:text="@string/save_button"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:layout_constraintVertical_bias="0.976"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
-
     <ImageButton
         android:id="@+id/cancel_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="33dp"
+        android:layout_height="37dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/dark_grey"
         android:src="?attr/homeAsUpIndicator"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="?attr/homeAsUpIndicator" />
 
+
     <Button
         android:id="@+id/camera_button"
         android:layout_width="157dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="0dp"
         android:backgroundTint="@color/dark_grey"
-        android:text="take photo"
+        android:text="camera"
+        app:layout_constraintBottom_toTopOf="@+id/insert_button"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.177"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothing_title" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_image" />
 
     <Button
         android:id="@+id/insert_button"
         android:layout_width="157dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="@color/dark_grey"
-        android:text="insert photo"
+        android:text="upload image"
+        app:layout_constraintBottom_toTopOf="@+id/clothing_title"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.877"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothing_title" />
+        app:layout_constraintTop_toBottomOf="@+id/camera_button" />
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="91dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="64dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <Spinner
         android:id="@+id/spinner"
@@ -92,7 +93,8 @@
         app:layout_constraintBottom_toTopOf="@+id/button10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothing_title">
+        app:layout_constraintTop_toBottomOf="@+id/clothing_title"
+        app:layout_constraintVertical_bias="0.483">
 
     </Spinner>
 
