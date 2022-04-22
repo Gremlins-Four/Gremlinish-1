@@ -40,6 +40,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -54,11 +55,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     // implementation 'com.google.android.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-auth'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:VERSION'
+
 
     //implementation 'com.squareup.picasso:picasso:2.71828'
 
