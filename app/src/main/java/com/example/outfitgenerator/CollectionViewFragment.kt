@@ -130,12 +130,9 @@ class CollectionViewFragment: Fragment() {
                 else if(clothing2.tag == "Pants"){
                     clothingTagTextView.text = "Pants"
                 }
-               // else{
-                 //   clothingTagTextView.text = "Shoes"
                 else{
-                    clothingTagTextView.text="Pants"
+                    clothingTagTextView.text="Shoes"
                 }
-
 
                 //ADD IMAGEVIEW
             }

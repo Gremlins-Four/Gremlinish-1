@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/temp_hat_text"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/grey"
@@ -26,7 +26,7 @@
     <TextView
         android:id="@+id/temp_shirt_text"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/grey"
@@ -43,7 +43,7 @@
     <TextView
         android:id="@+id/temp_pants_text"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="4dp"
         android:layout_marginHorizontal="16dp"
         android:background="@color/grey"
@@ -60,9 +60,9 @@
     <TextView
         android:id="@+id/temp_shoes_text"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="80dp"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="4dp"
 
         android:background="@color/grey"
         android:gravity="center"
@@ -71,6 +71,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/random_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/temp_pants_text"
         app:layout_constraintVertical_bias="0.615" />
@@ -89,6 +90,21 @@
         app:layout_constraintStart_toEndOf="@id/closet_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+
+    <Button
+        android:id="@+id/save_outfit_button"
+        android:layout_width="263dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="@color/dark_grey"
+        android:text="@string/save_outfit"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/closet_button"
