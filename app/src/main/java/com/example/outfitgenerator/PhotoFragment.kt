@@ -108,6 +108,7 @@ open class PhotoFragment: Fragment() {
 
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
+        spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
         val database = FirebaseFirestore.getInstance().document("sampleData/collection")
@@ -141,16 +142,6 @@ open class PhotoFragment: Fragment() {
         }
 
 
-
-
-
-
-
-
-
-          spinner=view.findViewById<Spinner>(R.id.spinner)
-
-
         spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
         spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -168,11 +159,9 @@ open class PhotoFragment: Fragment() {
         camerabutton.setOnClickListener{
             callbacks?.cameraTime()
         }
-
         savebutton.setOnClickListener {
             saveToDatabase()
         }
-
         insertbutton.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
@@ -180,25 +169,12 @@ open class PhotoFragment: Fragment() {
 
         }
 
-
-
         fun onActivityResult(requestCode: Int, data: Intent?) {
             if (requestCode == RESULT_LOAD_IMAGE && data != null) {
                 val selectedImage: Uri? = data.data
-
                 iv_image.setImageURI(selectedImage)
-
-
             }
-
             }
-
-
-
-
-
-
-
 
         return view
 
