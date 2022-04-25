@@ -25,6 +25,7 @@ class FirstFragment: Fragment() {
    // private lateinit var uploadbutton: Button
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
+    private lateinit var saveoutfitbutton: Button
     /**
      * Required interface for hosting activities
      */
@@ -47,13 +48,14 @@ class FirstFragment: Fragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_first, container, false)
 
-
         //uploadbutton = view.findViewById(R.id.upload_button)
         collectionbutton = view.findViewById(R.id.closet_button)
         randombutton = view.findViewById(R.id.random_button)
+        saveoutfitbutton = view.findViewById(R.id.save_outfit_button)
+        saveoutfitbutton.isEnabled = false
 
-
-
+        //Buttons
+        //Outfit Generator
         val hatTextView: TextView = view.findViewById(R.id.temp_hat_text)
         val shirtTextView: TextView = view.findViewById(R.id.temp_shirt_text)
         val pantsTextView: TextView = view.findViewById(R.id.temp_pants_text)
@@ -72,10 +74,14 @@ class FirstFragment: Fragment() {
             pantsTextView.text = listPants[randPants]
             shoesTextView.text = listShoes[randShoes]
 
-
+            saveoutfitbutton.isEnabled = true
         }
+
         collectionbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
+        }
+        saveoutfitbutton.setOnClickListener {
+
         }
         //uploadbutton.setOnClickListener {
         //    callbacks?.startPhotoFragment()
