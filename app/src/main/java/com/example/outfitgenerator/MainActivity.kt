@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
     }
 
     override fun startOutfitFragment() {
-        val fragment4= OutfitFragment()
+        val fragment4 = OutfitFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment4).addToBackStack(null).commit()
     }
 
