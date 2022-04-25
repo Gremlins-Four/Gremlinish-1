@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks {
+class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks, OutfitFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
 
@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         val fragment3 = FirstFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment3).addToBackStack(null).commit()
 
+    }
+
+    override fun startOutfitFragment() {
+        val fragment4= OutfitFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment4).addToBackStack(null).commit()
     }
 
 

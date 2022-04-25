@@ -5,38 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/collection_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <Button
-        android:id="@+id/items_items_button"
+        android:id="@+id/outfit_items_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="4dp"
         android:text="Items"
+        android:backgroundTint="@color/medium_grey"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/outfit_outfits_button"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
     </Button>
 
     <Button
-        android:id="@+id/items_outfit_button"
+        android:id="@+id/outfit_outfits_button"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Outfits"
-        android:backgroundTint="@color/medium_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
-        app:layout_constraintStart_toEndOf="@+id/items_items_button">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/outfit_items_button">
 
     </Button>
 
     <ImageButton
-        android:id="@+id/xbutton"
+        android:id="@+id/outfit_x"
         android:layout_width="36dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
@@ -48,18 +43,5 @@
         tools:srcCompat="@android:drawable/btn_dialog">
 
     </ImageButton>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/upload_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="60dp"
-        android:src="@android:drawable/ic_input_add"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

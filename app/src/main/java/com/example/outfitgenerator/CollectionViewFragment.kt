@@ -30,6 +30,8 @@ class CollectionViewFragment: Fragment() {
     //private lateinit var dataRef: DatabaseReference
     //private lateinit var clothingArray: ArrayList<Collection>
     private lateinit var xButton: ImageButton
+    private lateinit var itemButton: Button
+    private lateinit var outfitButton: Button
 
 
 
@@ -45,6 +47,7 @@ class CollectionViewFragment: Fragment() {
     interface Callbacks {
         fun startFirstFragment()
         fun startPhotoFragment()
+        fun startOutfitFragment()
     }
 
     private var callbacks: Callbacks? = null
@@ -71,6 +74,8 @@ class CollectionViewFragment: Fragment() {
         val view = inflater.inflate(R.layout.fragment_collectionview, container, false)
         xButton = view.findViewById(R.id.xbutton)
         uploadbutton = view.findViewById(R.id.upload_button)
+        itemButton=view.findViewById(R.id.items_items_button)
+        outfitButton=view.findViewById(R.id.items_outfit_button)
 
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()
@@ -78,6 +83,12 @@ class CollectionViewFragment: Fragment() {
         xButton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
+        }
+        itemButton.setOnClickListener {
+            //do nothing, you're already here
+        }
+        outfitButton.setOnClickListener {
+            callbacks?.startOutfitFragment()
         }
 
         collectionRecyclerView =
