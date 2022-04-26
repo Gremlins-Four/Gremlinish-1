@@ -14,25 +14,40 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+//import com.google.firebase.database.DatabaseReference
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.ValueEventListener
 
 private const val TAG = "CollectionViewFragment"
+
+private lateinit var uploadbutton: FloatingActionButton
 
 class CollectionViewFragment: Fragment() {
     private lateinit var collectionRecyclerView: RecyclerView
     private var adapter: CollectionAdapter? = null
+    //private lateinit var dataRef: DatabaseReference
+    //private lateinit var clothingArray: ArrayList<Collection>
+    private lateinit var xButton: ImageButton
+    private lateinit var itemButton: Button
+    private lateinit var outfitButton: Button
+
 
 
     private val collectionViewModel: CollectionViewModel by lazy {
         ViewModelProviders.of(this).get(CollectionViewModel::class.java)
     }
 
-    private lateinit var xButton: Button
+
 
     /**
      * Required interface for hosting activities
      */
     interface Callbacks {
         fun startFirstFragment()
+        fun startPhotoFragment()
+        fun startOutfitFragment()
     }
 
     private var callbacks: Callbacks? = null
@@ -45,9 +60,12 @@ class CollectionViewFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //clothingArray = arrayListOf<Collection>()
+        //getClothingData()
         Log.d(TAG, "# of clothing items: ${collectionViewModel.clothing.size}")
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,10 +73,22 @@ class CollectionViewFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_collectionview, container, false)
         xButton = view.findViewById(R.id.xbutton)
+        uploadbutton = view.findViewById(R.id.upload_button)
+        itemButton=view.findViewById(R.id.items_items_button)
+        outfitButton=view.findViewById(R.id.items_outfit_button)
 
+        uploadbutton.setOnClickListener {
+            callbacks?.startPhotoFragment()
+        }
         xButton.setOnClickListener {
             callbacks?.startFirstFragment()
             // Return to main layout
+        }
+        itemButton.setOnClickListener {
+            //do nothing, you're already here
+        }
+        outfitButton.setOnClickListener {
+            callbacks?.startOutfitFragment()
         }
 
         collectionRecyclerView =
@@ -94,26 +124,26 @@ class CollectionViewFragment: Fragment() {
             val view = layoutInflater.inflate(R.layout.clothing_item, parent, false)
             return CollectionHolder(view)
         }
-        override fun getItemCount() = clothing.size
+        override fun getItemCount(): Int = clothing.size
         override fun onBindViewHolder(holder: CollectionHolder, position: Int) {
             val clothing2 = clothing[position]
             holder.apply {
                 //This function sets up the individual texts and image for each item to be displayed.
-                clothingTitleTextView.text = "Clothing Title"
+               // clothingTitleTextView.text = "Clothing Title"
+                clothingTitleTextView.text = "Blue Jorts"
                 //clothingTitleTextView.text = clothing2.piece
-                if(clothing2.hat == "Hat"){
+                if(clothing2.tag == "Hat"){
                     clothingTagTextView.text = "Hat"
                 }
-                else if(clothing2.shirt == "Shirt"){
+                else if(clothing2.tag == "Shirt"){
                     clothingTagTextView.text = "Shirt"
                 }
-                else if(clothing2.pants == "Pants"){
+                else if(clothing2.tag == "Pants"){
                     clothingTagTextView.text = "Pants"
                 }
                 else{
-                    clothingTagTextView.text = "Shoes"
+                    clothingTagTextView.text="Shoes"
                 }
-
 
                 //ADD IMAGEVIEW
             }

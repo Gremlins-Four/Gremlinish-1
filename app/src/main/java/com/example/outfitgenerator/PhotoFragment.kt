@@ -39,6 +39,9 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+//import java.io.IOException
+//import com.google.firebase.firestore.FirebaseFirestore
+
 
 
 open class PhotoFragment: Fragment() {
@@ -51,7 +54,7 @@ open class PhotoFragment: Fragment() {
     private val RESULT_LOAD_IMAGE = 1
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
-    private lateinit var cancelbutton: Button
+    private lateinit var cancelbutton: ImageButton
     private lateinit var camerabutton: Button
     private lateinit var spinner: Spinner
     private lateinit var imageView: ImageView
@@ -65,6 +68,7 @@ open class PhotoFragment: Fragment() {
         fun startFirstFragment()
         fun cameraTime()
         fun saveClothes()
+        fun startCollectionViewFragment()
     }
     private var callbacks: Callbacks? = null
 
@@ -125,6 +129,7 @@ open class PhotoFragment: Fragment() {
 
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
+        spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
         //points to and references to firestore file/folderpath (not storage—where the photos are stored)
@@ -177,6 +182,7 @@ open class PhotoFragment: Fragment() {
         spinner.adapter =
             ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item)
         spinner.onItemSelectedListener =object :AdapterView.OnItemSelectedListener{
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
@@ -186,7 +192,7 @@ open class PhotoFragment: Fragment() {
             }
         }
         cancelbutton.setOnClickListener {
-            callbacks?.startFirstFragment()
+            callbacks?.startCollectionViewFragment()
             // Return to main layout
         }
 
@@ -196,7 +202,6 @@ open class PhotoFragment: Fragment() {
 
         return view
     }
-
     //after the result of either camera or choose from gallery activity, saves correlated photo to
     //firebase storage
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -282,6 +287,7 @@ open class PhotoFragment: Fragment() {
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, MainActivity.CAMERA_REQUEST_CODE)
+
             }
         }
         else {
@@ -349,6 +355,7 @@ open class PhotoFragment: Fragment() {
                 ).show()
             }
         }
+
     }
 
 

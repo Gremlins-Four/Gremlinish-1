@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Outfit Generator</string>
-    <string name="random_button">Randomize</string>
-    <string name="save_button">Save</string>
+    <string name="random_button">Generate Outfit</string>
+    <string name="save_button">Save Item</string>
     <string name="cancel_button">Cancel</string>
 
     <string name="collection_view">Closet</string>
+    <string name="save_outfit">Save Outfit</string>
+
     <string name="upload">Upload</string>
     <string name="clothing_title_hint">Item name</string>
     <string name="shoes">Shoes</string>
