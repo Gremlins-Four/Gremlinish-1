@@ -77,38 +77,6 @@ open class PhotoFragment: Fragment() {
         super.onAttach(context)
         callbacks = context as Callbacks?
     }
-    override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-
-///////*dead code, could be useful for reference for data retrieval later*////////
-
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        /*
-        var mStorageReference = FirebaseStorage.getInstance().reference.child("picture/sunset.JPG")
-
-        try {
-            val localFile = File.createTempFile("sunset", "jpg")
-            mStorageReference.getFile(localFile)
-                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
-                    Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
-                        .show()
-                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    imageView = view?.findViewById(R.id.iv_image)!!
-                    imageView.setImageBitmap(bitmap)
-                }).addOnFailureListener(OnFailureListener {
-                    Toast.makeText(
-                        requireActivity(),
-                        "Error Occurred",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                })
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-         */
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
@@ -150,7 +118,7 @@ open class PhotoFragment: Fragment() {
         //saves title to firestore, thats about it
         fun saveToDatabase() {
 
-            val clothingTitle = titleField.getText().toString()
+            val clothingTitle = titleField.text.toString()
 
             val newClothing = hashMapOf(
                 "title" to clothingTitle
@@ -236,7 +204,7 @@ open class PhotoFragment: Fragment() {
     }
 
     fun getFileExt(contentUri: Uri): String? {
-        val c: ContentResolver = requireActivity().getContentResolver()
+        val c: ContentResolver = requireActivity().contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(c.getType(contentUri))
     }
@@ -256,7 +224,7 @@ open class PhotoFragment: Fragment() {
         val image = File.createTempFile(
             imageFileName,  /* prefix */
             ".jpg",  /* suffix */
-            requireActivity().getCacheDir()  /* directory */
+            requireActivity().cacheDir  /* directory */
         )
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.absolutePath
@@ -269,7 +237,8 @@ open class PhotoFragment: Fragment() {
     fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+
+        if (activity?.packageManager?.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)  != null) {
             // Create the File where the photo should go
             var photoFile: File? = null
             try {
