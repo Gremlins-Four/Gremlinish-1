@@ -17,17 +17,18 @@ import android.net.Uri
 import android.os.Environment
 import android.os.PersistableBundle
 import android.widget.*
+import com.example.outfitgenerator.databinding.ActivityMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks, OutfitFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
-
-    // val photos: ArrayList<PhotoSave> = ArrayList<PhotoSave>()
-  
     private lateinit var iv_image: ImageView
+    //private lateinit var binding: ActivityMainBinding
 
 
     companion object{
@@ -39,9 +40,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         // iv_image = findViewById(R.id.iv_image)
-
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null){
