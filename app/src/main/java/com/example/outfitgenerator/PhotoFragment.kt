@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
 import com.google.firebase.storage.StorageReference
+
 //import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
@@ -36,6 +36,8 @@ open class PhotoFragment: Fragment() {
 
     private val PICK_IMAGE_REQUEST = 22
 
+    // public val image_id = 0
+
     private val RESULT_LOAD_IMAGE = 1
     private lateinit var iv_image: ImageView
     private lateinit var savebutton: Button
@@ -45,6 +47,14 @@ open class PhotoFragment: Fragment() {
     private lateinit var spinner: Spinner
     private lateinit var imageView: ImageView
     private lateinit var insertbutton: Button
+
+    var selected = 0
+
+    val context = this
+    val db = getActivity()?.let { DBHandler(context = it) }
+
+
+
     /**
      * Required interface for hosting activities
      */
@@ -123,11 +133,27 @@ open class PhotoFragment: Fragment() {
             )
 
 
+            if (selected == 0) {
+                db?.insertHatData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 1) {
+                db?.insertShirtData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 2) {
+                db?.insertPantsData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 3) {
+                db?.insertShoesData(Clothing(null, clothingTitle))
+            }
+
+
             val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
             toast1.show()
             // val newImage = hashMapof
             // or Bitmap???
-
 
             database.collection("Wardrobe")
                 .add(newClothing)
@@ -142,6 +168,7 @@ open class PhotoFragment: Fragment() {
         }
 
 
+
         spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
         spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -150,8 +177,26 @@ open class PhotoFragment: Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position).toString()
+
+                if (item == "Hat"){
+                    selected = 0
+                }
+                if (item == "Shirt"){
+                    selected = 1
+                }
+                if (item == "Pants"){
+                    selected = 2
+                }
+                if (item == "Shoes"){
+                    selected = 3
+                }
+
             }
         }
+
+
+
+
         cancelbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
             // Return to main layout
@@ -161,13 +206,20 @@ open class PhotoFragment: Fragment() {
         }
         savebutton.setOnClickListener {
             saveToDatabase()
+
         }
+
         insertbutton.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
             SelectImage()
 
         }
+
+
+
+
+
 
         fun onActivityResult(requestCode: Int, data: Intent?) {
             if (requestCode == RESULT_LOAD_IMAGE && data != null) {
@@ -189,9 +241,6 @@ open class PhotoFragment: Fragment() {
             Intent.createChooser(intent, "Select Image from here..."),
             PICK_IMAGE_REQUEST)
     }
-
-
-
 
 
     //add a listener to the Edit Text View Widget we just created
