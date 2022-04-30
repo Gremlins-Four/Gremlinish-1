@@ -37,8 +37,10 @@ import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.IOException
+import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
 import java.util.*
+
 //import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
@@ -51,6 +53,8 @@ open class PhotoFragment: Fragment() {
 
     private val PICK_IMAGE_REQUEST = 22
 
+    // public val image_id = 0
+
     private val RESULT_LOAD_IMAGE = 1
     private lateinit var savebutton: Button
     private lateinit var titleField: EditText
@@ -59,8 +63,13 @@ open class PhotoFragment: Fragment() {
     private lateinit var spinner: Spinner
     private lateinit var imageView: ImageView
     private lateinit var insertbutton: Button
-    private lateinit var selectedImage: ImageView
-    private lateinit var currentPhotoPath: String
+
+
+    var selected = 0
+
+    val context = this
+    val db = getActivity()?.let { DBHandler(context = it) }
+
     /**
      * Required interface for hosting activities
      */
@@ -125,11 +134,27 @@ open class PhotoFragment: Fragment() {
             )
 
 
+            if (selected == 0) {
+                db?.insertHatData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 1) {
+                db?.insertShirtData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 2) {
+                db?.insertPantsData(Clothing(null, clothingTitle))
+            }
+
+            if (selected == 3) {
+                db?.insertShoesData(Clothing(null, clothingTitle))
+            }
+
+
             val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
             toast1.show()
             // val newImage = hashMapof
             // or Bitmap???
-
 
             database.collection("Wardrobe")
                 .add(newClothing)
@@ -144,12 +169,10 @@ open class PhotoFragment: Fragment() {
         }
 
 
-          spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
-        spinner.adapter =
-            ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item)
-        spinner.onItemSelectedListener =object :AdapterView.OnItemSelectedListener{
+        spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
+        spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
@@ -157,8 +180,26 @@ open class PhotoFragment: Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position).toString()
+
+                if (item == "Hat"){
+                    selected = 0
+                }
+                if (item == "Shirt"){
+                    selected = 1
+                }
+                if (item == "Pants"){
+                    selected = 2
+                }
+                if (item == "Shoes"){
+                    selected = 3
+                }
+
             }
         }
+
+
+
+
         cancelbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
             // Return to main layout
@@ -166,7 +207,15 @@ open class PhotoFragment: Fragment() {
 
         savebutton.setOnClickListener {
             saveToDatabase()
+
         }
+
+
+        insertbutton.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+            SelectImage()
+
 
         return view
     }
@@ -199,6 +248,7 @@ open class PhotoFragment: Fragment() {
                 Log.d("tag", "onActivityResult: Gallery Image Uri:  $imageFileName")
                 selectedImage.setImageURI(contentUri)
                 uploadImageToFirebase(imageFileName, contentUri)
+
             }
         }
     }
@@ -336,9 +386,6 @@ open class PhotoFragment: Fragment() {
             Intent.createChooser(intent, "Select Image from here..."),
             PICK_IMAGE_REQUEST)
     }
-
-
-
 
 
     //add a listener to the Edit Text View Widget we just created
