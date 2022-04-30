@@ -283,8 +283,8 @@ open class PhotoFragment: Fragment() {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.absolutePath
 
-        return image
-    }
+            return image
+        }
 
     //the new camera intent/function. Requires a filepath in order for it to be fired, otherwise,
     // fatal exception

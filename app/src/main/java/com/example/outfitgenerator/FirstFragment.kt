@@ -2,6 +2,7 @@ package com.example.outfitgenerator
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
 import android.os.Bundle
@@ -95,9 +96,9 @@ class FirstFragment: Fragment() {
         callbacks = null
     }
 
-    fun downloadPhoto(photoTitle: String) {
+    fun downloadPhoto(photoTitle: String): Bitmap? {
         var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")
-
+        var Bitmap: Bitmap? = null
 
         try {
             val localFile = File.createTempFile("newPhoto","jpg")
@@ -106,8 +107,7 @@ class FirstFragment: Fragment() {
                     Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
                         .show()
                     val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                    hatView = view?.findViewById(R.id.temp_hat_text)!!
-                    hatView.setImageBitmap(bitmap)
+                    Bitmap = bitmap
                 }).addOnFailureListener(OnFailureListener {
                     Toast.makeText(
                         requireActivity(),
@@ -118,5 +118,7 @@ class FirstFragment: Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+        return Bitmap
     }
 }
