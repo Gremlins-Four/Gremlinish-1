@@ -2,6 +2,7 @@ package com.example.outfitgenerator
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import java.io.IOException
 import java.util.*
 import kotlin.random.Random
 
@@ -93,4 +100,28 @@ class FirstFragment: Fragment() {
         callbacks = null
     }
 
+    fun downloadPhoto(photoTitle: String) {
+        var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")
+
+
+        try {
+            val localFile = File.createTempFile("newPhoto","jpg")
+            mStorageReference.getFile(localFile)
+                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+                    Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
+                        .show()
+                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                    hatView = view?.findViewById(R.id.temp_hat_text)!!
+                    hatView.setImageBitmap(bitmap)
+                }).addOnFailureListener(OnFailureListener {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Error Ocurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                })
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 }
