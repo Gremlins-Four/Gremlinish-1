@@ -37,7 +37,7 @@ import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.IOException
-import com.google.firebase.storage.StorageReference
+
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,6 +63,8 @@ open class PhotoFragment: Fragment() {
     private lateinit var spinner: Spinner
     private lateinit var imageView: ImageView
     private lateinit var insertbutton: Button
+    private lateinit var selectedImage: ImageView
+    private lateinit var currentPhotoPath: String
 
 
     var selected = 0
@@ -212,9 +214,11 @@ open class PhotoFragment: Fragment() {
 
 
         insertbutton.setOnClickListener {
-            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val galleryIntent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
             SelectImage()
+        }
 
 
         return view
@@ -429,6 +433,7 @@ open class PhotoFragment: Fragment() {
 
     }
 }
+
 
 
 
