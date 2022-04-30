@@ -4,8 +4,7 @@ import com.google.firebase.database.Exclude
 import java.util.*
 //val id: UUID = UUID.randomUUID()
 var collectionList = mutableListOf<Collection>()
-data class Collection(val id: UUID = UUID.randomUUID(),
-                        var title: String ?= null,
+data class Collection(var title: String ?= null,
                         var tag: String ?= null)
 
 
