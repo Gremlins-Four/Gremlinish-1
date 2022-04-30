@@ -12,30 +12,39 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.util.jar.Manifest
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
+import android.os.PersistableBundle
+import android.widget.*
+import com.example.outfitgenerator.databinding.ActivityMainBinding
+
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks, OutfitFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
-
-    // val photos: ArrayList<PhotoSave> = ArrayList<PhotoSave>()
-  
     private lateinit var iv_image: ImageView
+    //private lateinit var binding: ActivityMainBinding
 
 
     companion object{
-        private const val CAMERA_PERMISSION_CODE = 1
-        private const val CAMERA_REQUEST_CODE = 2
+        const val CAMERA_PERMISSION_CODE = 1
+        const val CAMERA_REQUEST_CODE = 2
+        const val GALLERY_REQUEST_CODE = 5
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         // iv_image = findViewById(R.id.iv_image)
-
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null){
@@ -72,7 +81,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
 
 
     override fun cameraTime(){
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED ){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PERMISSION_GRANTED ){
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, CAMERA_REQUEST_CODE)
         } else{
@@ -116,7 +125,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == CAMERA_PERMISSION_CODE) {
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED) {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, CAMERA_REQUEST_CODE)
             } else{

@@ -5,7 +5,7 @@
     <string name="cancel_button">Cancel</string>
 
     <string name="collection_view">Closet</string>
-    <string name="save_outfit">Save Outfit</string>
+    <string name="save_outfit">Save to closet</string>
 
     <string name="upload">Upload</string>
     <string name="clothing_title_hint">Item name</string>
@@ -13,6 +13,9 @@
     <string name="pants">Pants</string>
     <string name="shirt">Shirt</string>
     <string name="hat">Hat</string>
+    <string name="clothing_tag">Clothing Tag</string>
+    <string name="clothing_title">Clothing Title</string>
+    <string name="clothing_image">clothing_image</string>
 
     <string-array name="dropdownmenu">
         <item>Hat</item>
@@ -20,8 +23,6 @@
         <item>Pants</item>
         <item>Shoes</item>
     </string-array>
-
-
 
 
 </resources>

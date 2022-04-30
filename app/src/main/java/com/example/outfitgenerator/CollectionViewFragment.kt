@@ -1,5 +1,6 @@
 package com.example.outfitgenerator
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -9,12 +10,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.outfitgenerator.databinding.ActivityMainBinding
+import com.example.outfitgenerator.databinding.FragmentCollectionviewBinding
+import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.database.*
+import com.google.firebase.database.Query
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 //import com.google.firebase.database.DatabaseReference
 //import com.google.firebase.database.FirebaseDatabase
@@ -24,59 +35,50 @@ private const val TAG = "CollectionViewFragment"
 
 private lateinit var uploadbutton: FloatingActionButton
 
+
 class CollectionViewFragment: Fragment() {
+    private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
-    private var adapter: CollectionAdapter? = null
-    //private lateinit var dataRef: DatabaseReference
-    //private lateinit var clothingArray: ArrayList<Collection>
     private lateinit var xButton: ImageButton
     private lateinit var itemButton: Button
     private lateinit var outfitButton: Button
-
-
-
-    private val collectionViewModel: CollectionViewModel by lazy {
-        ViewModelProviders.of(this).get(CollectionViewModel::class.java)
-    }
-
-
+    private lateinit var binding: FragmentCollectionviewBinding
+    private var firstLoad = true //Test function variable
+    private var adapter: CollectionAdapter? = null
 
     /**
      * Required interface for hosting activities
      */
+    //Callbacks Code
     interface Callbacks {
         fun startFirstFragment()
         fun startPhotoFragment()
         fun startOutfitFragment()
     }
-
     private var callbacks: Callbacks? = null
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
-    }
+    } //End of Callbacks Code
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //clothingArray = arrayListOf<Collection>()
-        //getClothingData()
-        Log.d(TAG, "# of clothing items: ${collectionViewModel.clothing.size}")
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_collectionview, container, false)
+        binding = FragmentCollectionviewBinding.inflate(layoutInflater, container, false)
+        val view = binding.root
+
+        // XML view find
         xButton = view.findViewById(R.id.xbutton)
         uploadbutton = view.findViewById(R.id.upload_button)
         itemButton=view.findViewById(R.id.items_items_button)
         outfitButton=view.findViewById(R.id.items_outfit_button)
-
+        // Click Listeners
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()
         }
@@ -91,64 +93,50 @@ class CollectionViewFragment: Fragment() {
             callbacks?.startOutfitFragment()
         }
 
-        collectionRecyclerView =
-            view.findViewById(R.id.collection_recycler_view) as RecyclerView
-        collectionRecyclerView.layoutManager = LinearLayoutManager(context)
-        updateUI()
-
+        // This produces a grid of clothing from the database.
+        if(firstLoad) {
+            popCollection()
+            firstLoad = false
+        }
+        getData()
+        val CollectionViewFragment = this
+        binding.collectionRecyclerView.apply{
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = CollectionAdapter(collectionList)
+        }
 
 
         return view
+    } //End of onCreateView()
 
+    // Testing function
+    private fun popCollection(){
+        val item1 = Collection("Blue Hat", "Hat")
+        collectionList.add(item1)
+        val item2 = Collection("White Shirt", "Shirt")
+        collectionList.add(item2)
     }
 
-    private fun updateUI() {
-        val clothingItems = collectionViewModel.clothing
-        adapter = CollectionAdapter(clothingItems)
-        collectionRecyclerView.adapter = adapter
-    }
-
-
-    private inner class CollectionHolder(view: View)
-        : RecyclerView.ViewHolder(view) {
-        val clothingTitleTextView: TextView = itemView.findViewById(R.id.clothing_title)
-        val clothingTagTextView: TextView = itemView.findViewById(R.id.clothing_tag)
-        val clothingImageView: ImageView = itemView.findViewById(R.id.clothing_image)
-    }
-
-    private inner class CollectionAdapter(var clothing: List<Collection>)
-        : RecyclerView.Adapter<CollectionHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-                : CollectionHolder {
-            val view = layoutInflater.inflate(R.layout.clothing_item, parent, false)
-            return CollectionHolder(view)
-        }
-        override fun getItemCount(): Int = clothing.size
-        override fun onBindViewHolder(holder: CollectionHolder, position: Int) {
-            val clothing2 = clothing[position]
-            holder.apply {
-                //This function sets up the individual texts and image for each item to be displayed.
-               // clothingTitleTextView.text = "Clothing Title"
-                clothingTitleTextView.text = "Blue Jorts"
-                //clothingTitleTextView.text = clothing2.piece
-                if(clothing2.tag == "Hat"){
-                    clothingTagTextView.text = "Hat"
+    //This function pulls data from the database for the CollectionView.
+    private fun getData(){
+        database2 = FirebaseFirestore.getInstance()
+        database2.collection("ClothingCollection").orderBy("ClothingID").addSnapshotListener(object:
+            EventListener<QuerySnapshot>{
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?){
+                if (error != null){
+                    Log.e("Firebase Error", error.message.toString())
+                    return
                 }
-                else if(clothing2.tag == "Shirt"){
-                    clothingTagTextView.text = "Shirt"
+                for(dc: DocumentChange in value?.documentChanges!!){
+                    if(dc.type == DocumentChange.Type.ADDED){
+                        collectionList.add(dc.document.toObject(Collection::class.java))
+                    }
                 }
-                else if(clothing2.tag == "Pants"){
-                    clothingTagTextView.text = "Pants"
-                }
-                else{
-                    clothingTagTextView.text="Shoes"
-                }
-
-                //ADD IMAGEVIEW
             }
-        }
-    }
+        })
+
+    } //End of getData()
+
 
 
     //add a listener to the Edit Text View Widget we just created
@@ -156,7 +144,7 @@ class CollectionViewFragment: Fragment() {
         super.onStart()
         //left blank
     }
-
+    //Callback Code
     override fun onDetach() {
         super.onDetach()
         callbacks = null
