@@ -1,5 +1,6 @@
 package com.example.outfitgenerator
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -18,7 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.outfitgenerator.databinding.ActivityMainBinding
 import com.example.outfitgenerator.databinding.FragmentCollectionviewBinding
+import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.database.*
+import com.google.firebase.database.Query
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -30,21 +35,16 @@ private const val TAG = "CollectionViewFragment"
 
 private lateinit var uploadbutton: FloatingActionButton
 
+
 class CollectionViewFragment: Fragment() {
-    private lateinit var bind: ActivityMainBinding
-    val database = Firebase.firestore
+    private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
-    private var adapter: CollectionAdapter? = null
-    //private lateinit var dataRef: DatabaseReference
-    //private lateinit var clothingArray: ArrayList<Collection>
     private lateinit var xButton: ImageButton
     private lateinit var itemButton: Button
     private lateinit var outfitButton: Button
     private lateinit var binding: FragmentCollectionviewBinding
-    private var firstLoad = true
-
-
-
+    private var firstLoad = true //Test function variable
+    private var adapter: CollectionAdapter? = null
 
     /**
      * Required interface for hosting activities
@@ -59,15 +59,12 @@ class CollectionViewFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
-    }
-    //End of Callbacks Code
+    } //End of Callbacks Code
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,11 +73,12 @@ class CollectionViewFragment: Fragment() {
         binding = FragmentCollectionviewBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
+        // XML view find
         xButton = view.findViewById(R.id.xbutton)
         uploadbutton = view.findViewById(R.id.upload_button)
         itemButton=view.findViewById(R.id.items_items_button)
         outfitButton=view.findViewById(R.id.items_outfit_button)
-
+        // Click Listeners
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()
         }
@@ -95,44 +93,49 @@ class CollectionViewFragment: Fragment() {
             callbacks?.startOutfitFragment()
         }
 
-        /*
+        // This produces a grid of clothing from the database.
         if(firstLoad) {
             popCollection()
             firstLoad = false
         }
-        */
-
+        getData()
         val CollectionViewFragment = this
         binding.collectionRecyclerView.apply{
             layoutManager = GridLayoutManager(context, 3)
             adapter = CollectionAdapter(collectionList)
         }
-        //collectionRecyclerView =
-         //   view.findViewById(R.id.collection_recycler_view) as RecyclerView
-        //collectionRecyclerView.layoutManager = LinearLayoutManager(context)
-        //collectionRecyclerView.adapter = CollectionAdapter(collectionList)
-
-
-        //updateUI()
-
 
 
         return view
+    } //End of onCreateView()
 
-    }
-
-        /*
+    // Testing function
     private fun popCollection(){
-        val item1 = Collection(4, "Blue Shirt", "Hat")
+        val item1 = Collection("Blue Hat", "Hat")
         collectionList.add(item1)
+        val item2 = Collection("White Shirt", "Shirt")
+        collectionList.add(item2)
     }
-    */
 
-    //private fun updateUI() {
-     //   val clothingItems = collectionViewModel.clothing
-       // adapter = CollectionAdapter(clothingItems)
-    //    collectionRecyclerView.adapter = adapter
-    //}
+    //This function pulls data from the database for the CollectionView.
+    private fun getData(){
+        database2 = FirebaseFirestore.getInstance()
+        database2.collection("ClothingCollection").orderBy("ClothingID").addSnapshotListener(object:
+            EventListener<QuerySnapshot>{
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?){
+                if (error != null){
+                    Log.e("Firebase Error", error.message.toString())
+                    return
+                }
+                for(dc: DocumentChange in value?.documentChanges!!){
+                    if(dc.type == DocumentChange.Type.ADDED){
+                        collectionList.add(dc.document.toObject(Collection::class.java))
+                    }
+                }
+            }
+        })
+
+    } //End of getData()
 
 
 
@@ -141,7 +144,7 @@ class CollectionViewFragment: Fragment() {
         super.onStart()
         //left blank
     }
-
+    //Callback Code
     override fun onDetach() {
         super.onDetach()
         callbacks = null
