@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.jar.Manifest
-import android.content.pm.PackageManager
+
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.Bitmap
+
 import android.net.Uri
 import android.os.Environment
 import android.os.PersistableBundle

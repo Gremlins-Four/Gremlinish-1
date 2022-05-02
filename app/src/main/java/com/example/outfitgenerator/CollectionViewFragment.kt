@@ -94,10 +94,10 @@ class CollectionViewFragment: Fragment() {
         }
 
         // This produces a grid of clothing from the database.
-        if(firstLoad) {
-            popCollection()
+        /*if(firstLoad) {
+            //popCollection()
             firstLoad = false
-        }
+        }*/
         getData()
         val CollectionViewFragment = this
         binding.collectionRecyclerView.apply{
@@ -110,17 +110,17 @@ class CollectionViewFragment: Fragment() {
     } //End of onCreateView()
 
     // Testing function
-    private fun popCollection(){
+    /*private fun popCollection(){
         val item1 = Collection("Blue Hat", "Hat")
         collectionList.add(item1)
         val item2 = Collection("White Shirt", "Shirt")
         collectionList.add(item2)
-    }
+    }*/
 
     //This function pulls data from the database for the CollectionView.
     private fun getData(){
         database2 = FirebaseFirestore.getInstance()
-        database2.collection("ClothingCollection").orderBy("ClothingID").addSnapshotListener(object:
+        database2.collection("sampleData").addSnapshotListener(object:
             EventListener<QuerySnapshot>{
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?){
                 if (error != null){
