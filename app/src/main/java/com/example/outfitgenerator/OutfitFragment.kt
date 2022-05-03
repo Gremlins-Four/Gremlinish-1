@@ -69,7 +69,7 @@ class OutfitFragment: Fragment() {
         getData()
         val OutfitFragment = this
         binding.outfitRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager = GridLayoutManager(context, 4)
             adapter = OutfitAdapter(savedOutfitList)
         }
 
