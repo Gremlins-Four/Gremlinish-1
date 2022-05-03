@@ -35,7 +35,7 @@ private const val TAG = "CollectionViewFragment"
 
 private lateinit var uploadbutton: FloatingActionButton
 
-private var firstLoad = true
+private var firstLoad = true //Fix for data duplication error
 class CollectionViewFragment: Fragment() {
     private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
