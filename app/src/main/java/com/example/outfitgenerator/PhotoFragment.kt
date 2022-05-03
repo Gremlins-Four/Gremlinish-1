@@ -7,10 +7,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
@@ -29,12 +27,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.IOException
 
@@ -71,6 +66,7 @@ open class PhotoFragment: Fragment() {
 
     val context = this
     val db = getActivity()?.let { DBHandler(context = it) }
+    val hello = 0
 
     /**
      * Required interface for hosting activities
@@ -126,32 +122,17 @@ open class PhotoFragment: Fragment() {
             startActivityForResult(gallery, MainActivity.GALLERY_REQUEST_CODE)
         }
 
+
+
+
+
         //saves title to firestore, thats about it
         fun saveToDatabase() {
-
             val clothingTitle = titleField.text.toString()
 
             val newClothing = hashMapOf(
                 "title" to clothingTitle
             )
-
-
-            if (selected == 0) {
-                db?.insertHatData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 1) {
-                db?.insertShirtData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 2) {
-                db?.insertPantsData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 3) {
-                db?.insertShoesData(Clothing(null, clothingTitle))
-            }
-
 
             val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
             toast1.show()
@@ -208,7 +189,9 @@ open class PhotoFragment: Fragment() {
         }
 
         savebutton.setOnClickListener {
-            saveToDatabase()
+            // saveToDatabase()
+            val clothingTitle = titleField.text.toString()
+            // uploadImageToFirebase(clothingTitle, URI)
 
         }
 
@@ -325,16 +308,38 @@ open class PhotoFragment: Fragment() {
     // retrieve the images later
     fun uploadImageToFirebase(name: String, contentUri: Uri) {
         val image = storageReference!!.child("pictures/$name")
+        val clothingTitle = name
         image.putFile(contentUri)
             .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot?> {
                 override fun onSuccess(taskSnapshot: UploadTask.TaskSnapshot?) {
                     image.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(uri: Uri) {
                             Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+
+                            if (selected == 0) {
+                                db?.insertHatData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 1) {
+                                db?.insertShirtData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 2) {
+                                db?.insertPantsData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 3) {
+                                db?.insertShoesData(Clothing(contentUri, clothingTitle))
+                            }
                         }
                     })
                     Toast.makeText(requireActivity(), "Image Is Uploaded.", Toast.LENGTH_SHORT)
                         .show()
+
+
+
+
+
                 }
             }).addOnFailureListener(object : OnFailureListener {
                 override fun onFailure(e: Exception) {

@@ -1,18 +1,15 @@
 package com.example.outfitgenerator
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -20,33 +17,40 @@ import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.io.IOException
-import java.util.*
 import kotlin.random.Random
 
 
-
-
 class FirstFragment: Fragment() {
+   // private lateinit var uploadbutton: Button
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
     private lateinit var saveoutfitbutton: Button
-    private lateinit var hatView: ImageView
-    private lateinit var shirtView: ImageView
-    private lateinit var pantsView: ImageView
-    private lateinit var shoesView: ImageView
+
+
+    val context = this
+    val db = getActivity()?.let { DBHandler(context = it) }
+    val hello = 2
+
     /**
      * Required interface for hosting activities
      */
     interface Callbacks {
+        //fun startPhotoFragment()
         fun startCollectionViewFragment()
     }
+
     private var callbacks: Callbacks? = null
+
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
+        requireContext()
+        requireActivity()
     }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -55,31 +59,76 @@ class FirstFragment: Fragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_first, container, false)
 
-        //XML view find
+        //uploadbutton = view.findViewById(R.id.upload_button)
         collectionbutton = view.findViewById(R.id.closet_button)
         randombutton = view.findViewById(R.id.random_button)
         saveoutfitbutton = view.findViewById(R.id.save_outfit_button)
         saveoutfitbutton.isEnabled = false
 
-        //Buttons
+        // Set ImageView containers
+        val hatImageView: ImageView = view.findViewById(R.id.temp_hat_text)
+        val shirtImageView: ImageView = view.findViewById(R.id.temp_shirt_text)
+        val pantsImageView: ImageView = view.findViewById(R.id.temp_pants_text)
+        val shoesImageView: ImageView = view.findViewById(R.id.temp_shoes_text)
+
+
+        fun randomizeHats(): Bitmap? {
+            var hats = db?.readHatData()
+            var sizeHat = hats?.size
+            var randomHats: Int? = sizeHat?.let { Random.nextInt(0, it) }
+            if (randomHats != null) {
+                return downloadPhoto(hats?.get(randomHats))
+            }
+            return null
+        }
+
+        fun randomizeShirt(): Bitmap?{
+            var shirts = db?.readShirtData()
+            var sizeShirt = shirts?.size
+            var randomShirt: Int? = sizeShirt?.let { Random.nextInt(0, it) }
+            if (randomShirt != null) {
+                return downloadPhoto(shirts?.get(randomShirt))
+           }
+           return null
+        }
+
+        fun randomizePants(): Bitmap?{
+            var pants = db?.readPantsData()
+            var sizePants = pants?.size
+            var randomPants: Int? = sizePants?.let{ Random.nextInt(0, it) }
+            if (randomPants != null) {
+               return downloadPhoto(pants?.get(randomPants))
+            }
+            return null
+        }
+
+        fun randomizeShoes(): Bitmap?{
+            var shoes = db?.readShoesData()
+            var sizeShoes = shoes?.size
+            var randomShoes: Int? = sizeShoes?.let{ Random.nextInt(0, it) }
+            if (randomShoes != null) {
+                return downloadPhoto(shoes?.get(randomShoes))
+            }
+            return null
+        }
+
+
+        //ImageView containers
         //Outfit Generator
 
         randombutton.setOnClickListener {
-            //var listHat = listOf("Yellow Hat", "Blue Hat", "Red Hat", "Green Hat", "Baldus Hat")
-            //var randHat: Int = Random.nextInt(0, 5)
-            //var listShirt = listOf("Yellow Shirt", "Blue Shirt", "Red Shirt", "Green Shirt", "Baldus Shirt")
-            //var randShirt: Int = Random.nextInt(0, 5)
-            //var listPants = listOf("Yellow Pants", "Blue Pants", "Red Pants", "Green Pants", "Baldus Pants")
-            //var randPants: Int = Random.nextInt(0, 5)
-            //var listShoes = listOf("Yellow Shoes", "Blue Shoes", "Red Shoes", "Green Shoes", "Baldus Shoes")
-            //var randShoes: Int = Random.nextInt(0, 5)
-            //hatTextView.text = listHat[randHat]
-            //shirtTextView.text = listShirt[randShirt]
-            //pantsTextView.text = listPants[randPants]
-            //shoesTextView.text = listShoes[randShoes]
+            val hat = randomizeHats()
+            val shirt = randomizeShirt()
+            val pant = randomizePants()
+            val shoe = randomizeShoes()
 
+            hatImageView.setImageBitmap(hat)
+            shirtImageView.setImageBitmap(shirt)
+            pantsImageView.setImageBitmap(pant)
+            shoesImageView.setImageBitmap(shoe)
             saveoutfitbutton.isEnabled = true
         }
+
 
         collectionbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
@@ -87,6 +136,9 @@ class FirstFragment: Fragment() {
         saveoutfitbutton.setOnClickListener {
 
         }
+        //uploadbutton.setOnClickListener {
+        //    callbacks?.startPhotoFragment()
+        //}
         return view
 
     }
@@ -96,7 +148,7 @@ class FirstFragment: Fragment() {
         callbacks = null
     }
 
-    fun downloadPhoto(photoTitle: String): Bitmap? {
+    fun downloadPhoto(photoTitle: Clothing?): Bitmap? {
         var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")
         var Bitmap: Bitmap? = null
 
