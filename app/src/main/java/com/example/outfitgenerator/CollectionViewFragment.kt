@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.outfitgenerator.databinding.ActivityMainBinding
 import com.example.outfitgenerator.databinding.FragmentCollectionviewBinding
 import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -94,10 +93,6 @@ class CollectionViewFragment: Fragment() {
         }
 
         // This produces a grid of clothing from the database.
-        /*if(firstLoad) {
-            //popCollection()
-            firstLoad = false
-        }*/
         if(firstLoad == true) {
             firstLoad = false
             getData()
@@ -111,14 +106,6 @@ class CollectionViewFragment: Fragment() {
 
         return view
     } //End of onCreateView()
-
-    // Testing function
-    /*private fun popCollection(){
-        val item1 = Collection("Blue Hat", "Hat")
-        collectionList.add(item1)
-        val item2 = Collection("White Shirt", "Shirt")
-        collectionList.add(item2)
-    }*/
 
     //This function pulls data from the database for the CollectionView.
     private fun getData(){
@@ -140,8 +127,6 @@ class CollectionViewFragment: Fragment() {
         })
 
     } //End of getData()
-
-
 
     //add a listener to the Edit Text View Widget we just created
     override fun onStart() {
