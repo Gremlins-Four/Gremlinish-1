@@ -35,7 +35,7 @@ private const val TAG = "CollectionViewFragment"
 
 private lateinit var uploadbutton: FloatingActionButton
 
-
+private var firstLoad = true //Fix for data duplication error
 class CollectionViewFragment: Fragment() {
     private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
@@ -43,7 +43,7 @@ class CollectionViewFragment: Fragment() {
     private lateinit var itemButton: Button
     private lateinit var outfitButton: Button
     private lateinit var binding: FragmentCollectionviewBinding
-    private var firstLoad = true //Test function variable
+     //Test function variable
     private var adapter: CollectionAdapter? = null
 
     /**
@@ -98,13 +98,16 @@ class CollectionViewFragment: Fragment() {
             //popCollection()
             firstLoad = false
         }*/
-        getData()
-        val CollectionViewFragment = this
-        binding.collectionRecyclerView.apply{
-            layoutManager = GridLayoutManager(context, 3)
-            adapter = CollectionAdapter(collectionList)
-        }
+        if(firstLoad == true) {
+            firstLoad = false
+            getData()
 
+        }
+            val CollectionViewFragment = this
+            binding.collectionRecyclerView.apply {
+                layoutManager = GridLayoutManager(context, 3)
+                adapter = CollectionAdapter(collectionList)
+            }
 
         return view
     } //End of onCreateView()
@@ -119,6 +122,7 @@ class CollectionViewFragment: Fragment() {
 
     //This function pulls data from the database for the CollectionView.
     private fun getData(){
+
         database2 = FirebaseFirestore.getInstance()
         database2.collection("sampleData").addSnapshotListener(object:
             EventListener<QuerySnapshot>{
