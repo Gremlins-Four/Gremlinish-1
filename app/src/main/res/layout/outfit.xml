@@ -22,29 +22,29 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/hat_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/jorts"
                 android:contentDescription="@string/clothing_image"/>
             <ImageView
                 android:id="@+id/shirt_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/jorts"
                 android:contentDescription="@string/clothing_image"/>
             <ImageView
                 android:id="@+id/pants_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/jorts"
                 android:contentDescription="@string/clothing_image"/>
             <ImageView
                 android:id="@+id/shoes_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/jorts"
                 android:contentDescription="@string/clothing_image"/>
