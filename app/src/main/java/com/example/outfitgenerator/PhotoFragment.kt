@@ -64,9 +64,7 @@ open class PhotoFragment: Fragment() {
 
     var selected = 0
 
-    val context = this
-    val db = getActivity()?.let { DBHandler(context = it) }
-    val hello = 0
+
 
     /**
      * Required interface for hosting activities
@@ -105,6 +103,7 @@ open class PhotoFragment: Fragment() {
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
         spinner=view.findViewById<Spinner>(R.id.spinner)
+
 
 
         //points to and references to firestore file/folderpath (not storage—where the photos are stored)
@@ -208,6 +207,9 @@ open class PhotoFragment: Fragment() {
     }
     //after the result of either camera or choose from gallery activity, saves correlated photo to
     //firebase storage
+
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         //if (requestCode == RESULT_LOAD_IMAGE && data != null) {
           //  val selectedImage: Uri? = data.data
@@ -307,6 +309,10 @@ open class PhotoFragment: Fragment() {
     //this is probably where we can upload the ID and tag info into the firestore so we can
     // retrieve the images later
     fun uploadImageToFirebase(name: String, contentUri: Uri) {
+        //val context = this
+        val db = DBHandler(requireActivity())
+        //val dbHelper =
+        val hello = 0
         val image = storageReference!!.child("pictures/$name")
         val clothingTitle = name
         image.putFile(contentUri)

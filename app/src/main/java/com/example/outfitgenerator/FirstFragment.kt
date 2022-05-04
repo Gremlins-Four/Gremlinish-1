@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
+import org.koin.androidx.scope.requireScopeActivity
 import java.io.File
 import java.io.IOException
 import kotlin.random.Random
@@ -27,9 +28,8 @@ class FirstFragment: Fragment() {
     private lateinit var saveoutfitbutton: Button
 
 
-    val context = this
-    val db = getActivity()?.let { DBHandler(context = it) }
-    val hello = 2
+    //val context = this
+
 
     /**
      * Required interface for hosting activities
@@ -55,6 +55,7 @@ class FirstFragment: Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_first, container, false)
@@ -71,9 +72,12 @@ class FirstFragment: Fragment() {
         val pantsImageView: ImageView = view.findViewById(R.id.temp_pants_text)
         val shoesImageView: ImageView = view.findViewById(R.id.temp_shoes_text)
 
+        val dbHelper = DBHandler(requireActivity())
+        //val db = dbHelper.readableDatabase
+        val hello = 2
 
         fun randomizeHats(): Bitmap? {
-            var hats = db?.readHatData()
+            var hats = dbHelper?.readHatData()
             var sizeHat = hats?.size
             var randomHats: Int? = sizeHat?.let { Random.nextInt(0, it) }
             if (randomHats != null) {
@@ -83,7 +87,7 @@ class FirstFragment: Fragment() {
         }
 
         fun randomizeShirt(): Bitmap?{
-            var shirts = db?.readShirtData()
+            var shirts = dbHelper?.readShirtData()
             var sizeShirt = shirts?.size
             var randomShirt: Int? = sizeShirt?.let { Random.nextInt(0, it) }
             if (randomShirt != null) {
@@ -93,7 +97,7 @@ class FirstFragment: Fragment() {
         }
 
         fun randomizePants(): Bitmap?{
-            var pants = db?.readPantsData()
+            var pants = dbHelper?.readPantsData()
             var sizePants = pants?.size
             var randomPants: Int? = sizePants?.let{ Random.nextInt(0, it) }
             if (randomPants != null) {
@@ -103,7 +107,7 @@ class FirstFragment: Fragment() {
         }
 
         fun randomizeShoes(): Bitmap?{
-            var shoes = db?.readShoesData()
+            var shoes = dbHelper?.readShoesData()
             var sizeShoes = shoes?.size
             var randomShoes: Int? = sizeShoes?.let{ Random.nextInt(0, it) }
             if (randomShoes != null) {
@@ -163,7 +167,7 @@ class FirstFragment: Fragment() {
                 }).addOnFailureListener(OnFailureListener {
                     Toast.makeText(
                         requireActivity(),
-                        "Error Ocurred",
+                        "Error Occurred",
                         Toast.LENGTH_SHORT
                     ).show()
                 })
