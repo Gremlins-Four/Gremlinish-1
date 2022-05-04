@@ -21,12 +21,13 @@
         <entry key="app/src/main/res/layout/card_layout.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/clothing_item.xml" value="0.1585144927536232" />
         <entry key="app/src/main/res/layout/detail_outfit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_collectionview.xml" value="0.1747589111328125" />
+        <entry key="app/src/main/res/layout/fragment_collectionview.xml" value="0.1" />
+
         <entry key="app/src/main/res/layout/fragment_crime.xml" value="0.24592391304347827" />
         <entry key="app/src/main/res/layout/fragment_crime_list.xml" value="0.24592391304347827" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.1740891166355299" />
         <entry key="app/src/main/res/layout/fragment_outfit.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/fragment_photo.xml" value="0.21809692382812498" />
+        <entry key="app/src/main/res/layout/fragment_photo.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_crime.xml" value="0.1" />
         <entry key="app/src/main/res/layout/outfit.xml" value="0.1" />
         <entry key="app/src/main/res/menu/fragment_crime_list.xml" value="0.13697916666666668" />

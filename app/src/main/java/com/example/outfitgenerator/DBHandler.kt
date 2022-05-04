@@ -5,6 +5,9 @@ import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper as SQLiteOpenHelper
 import android.content.Context
+import android.net.Uri
+import androidx.core.database.getIntOrNull
+import androidx.fragment.app.FragmentActivity
 
 
 private const val DATABASE_NAME = "OutfitGenDB"
@@ -82,7 +85,7 @@ class DBHandler(context: Context):
     fun insertHatData(clothing: Clothing): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(HATS_ID_COL, clothing.image_id)
+        contentValues.put(HATS_ID_COL, clothing.id)
         contentValues.put(HATS_NAME_COL, clothing.image_title)
         return db.insert(TABLE_HATS, null, contentValues)
     }
@@ -94,7 +97,7 @@ class DBHandler(context: Context):
     fun insertShirtData(clothing: Clothing): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(SHIRTS_ID_COL, clothing.image_id)
+        contentValues.put(SHIRTS_ID_COL, clothing.id)
         contentValues.put(SHIRTS_NAME_COL, clothing.image_title)
         return db.insert(TABLE_SHIRTS, null, contentValues)
     }
@@ -106,7 +109,7 @@ class DBHandler(context: Context):
     fun insertPantsData(clothing: Clothing): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(PANTS_ID_COL, clothing.image_id)
+        contentValues.put(PANTS_ID_COL, clothing.id)
         contentValues.put(PANTS_NAME_COL, clothing.image_title)
         return db.insert(TABLE_PANTS, null, contentValues)
     }
@@ -118,7 +121,7 @@ class DBHandler(context: Context):
     fun insertShoesData(clothing: Clothing): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(SHOES_ID_COL, clothing.image_id)
+        contentValues.put(SHOES_ID_COL, clothing.id)
         contentValues.put(SHOES_NAME_COL, clothing.image_title)
         return db.insert(TABLE_SHOES, null, contentValues)
     }
@@ -135,8 +138,8 @@ class DBHandler(context: Context):
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(3, clothingTitle = String())  // ??
-                clothing.image_id = result.getInt(result.getColumnIndex(HATS_ID_COL))
+                val clothing = Clothing(Uri.EMPTY)  // ??
+                clothing.id = result.getInt(result.getColumnIndex(HATS_ID_COL))
                 clothing.image_title = result.getString(result.getColumnIndex(HATS_NAME_COL))
                 clothingList.add(clothing)
             }
@@ -157,8 +160,8 @@ class DBHandler(context: Context):
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(3, clothingTitle = String())  // ??
-                clothing.image_id = result.getInt(result.getColumnIndex(SHIRTS_ID_COL))
+                val clothing = Clothing(Uri.EMPTY)  // ??
+                clothing.id = result.getInt(result.getColumnIndex(SHIRTS_ID_COL))
                 clothing.image_title = result.getString(result.getColumnIndex(SHIRTS_NAME_COL))
                 clothingList.add(clothing)
             }
@@ -179,8 +182,8 @@ class DBHandler(context: Context):
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(3, clothingTitle = String())  // ??
-                clothing.image_id = result.getInt(result.getColumnIndex(PANTS_ID_COL))
+                val clothing = Clothing(Uri.EMPTY)  // ??
+                clothing.id = result.getInt(result.getColumnIndex(PANTS_ID_COL))
                 clothing.image_title = result.getString(result.getColumnIndex(PANTS_NAME_COL))
                 clothingList.add(clothing)
             }
@@ -201,8 +204,8 @@ class DBHandler(context: Context):
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(3, clothingTitle = String())  // ??
-                clothing.image_id = result.getInt(result.getColumnIndex(SHOES_ID_COL))
+                val clothing = Clothing(Uri.EMPTY)  // ??
+                clothing.id = result.getInt(result.getColumnIndex(SHOES_ID_COL))
                 clothing.image_title = result.getString(result.getColumnIndex(SHOES_NAME_COL))
                 clothingList.add(clothing)
             }
@@ -212,3 +215,6 @@ class DBHandler(context: Context):
     }
 
 }
+
+
+

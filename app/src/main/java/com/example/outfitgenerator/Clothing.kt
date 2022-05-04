@@ -1,14 +1,7 @@
 package com.example.outfitgenerator
 
-class Clothing(id: Int?, clothingTitle: String) {
-    var image_id = 0
-    var image_title: String? = null
+import android.net.Uri
 
-
-    fun Clothing() {}
-    fun Clothing(id: Int, title: String?) {
-        image_id = id
-        image_title = title
-
-    }
+data class Clothing(var image_id: Uri, var image_title: String = "") {
+    var id = Uri.PARCELABLE_WRITE_RETURN_VALUE
 }

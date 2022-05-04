@@ -7,10 +7,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
@@ -29,12 +27,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.IOException
 
@@ -70,8 +65,7 @@ open class PhotoFragment: Fragment() {
 
     var selected = 0
 
-    val context = this
-    val db = getActivity()?.let { DBHandler(context = it) }
+
 
     /**
      * Required interface for hosting activities
@@ -112,6 +106,7 @@ open class PhotoFragment: Fragment() {
         spinner=view.findViewById<Spinner>(R.id.spinner)
 
 
+
         //points to and references to firestore file/folderpath (not storage—where the photos are stored)
         val database = FirebaseFirestore.getInstance()//.document("sampleData/collection")
 
@@ -127,8 +122,13 @@ open class PhotoFragment: Fragment() {
             startActivityForResult(gallery, MainActivity.GALLERY_REQUEST_CODE)
         }
 
+
+
+
+
         //saves title to firestore, thats about it
         fun saveToDatabase() {
+
 
 
             val clothingTitle = titleField.getText().toString()
@@ -137,24 +137,6 @@ open class PhotoFragment: Fragment() {
             val newClothing = hashMapOf(
                 "title" to clothingTitle, "tag" to clothingTag
             )
-
-        /*
-            if (selected == 0) {
-                db?.insertHatData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 1) {
-                db?.insertShirtData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 2) {
-                db?.insertPantsData(Clothing(null, clothingTitle))
-            }
-
-            if (selected == 3) {
-                db?.insertShoesData(Clothing(null, clothingTitle))
-            }
-        */
 
             val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
             toast1.show()
@@ -213,7 +195,9 @@ open class PhotoFragment: Fragment() {
         }
 
         savebutton.setOnClickListener {
-            saveToDatabase()
+            // saveToDatabase()
+            val clothingTitle = titleField.text.toString()
+            // uploadImageToFirebase(clothingTitle, URI)
 
         }
 
@@ -230,6 +214,9 @@ open class PhotoFragment: Fragment() {
     }
     //after the result of either camera or choose from gallery activity, saves correlated photo to
     //firebase storage
+
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         //if (requestCode == RESULT_LOAD_IMAGE && data != null) {
           //  val selectedImage: Uri? = data.data
@@ -329,17 +316,43 @@ open class PhotoFragment: Fragment() {
     //this is probably where we can upload the ID and tag info into the firestore so we can
     // retrieve the images later
     fun uploadImageToFirebase(name: String, contentUri: Uri) {
+        //val context = this
+        val db = DBHandler(requireActivity())
+        //val dbHelper =
+        val hello = 0
         val image = storageReference!!.child("pictures/$name")
+        val clothingTitle = name
         image.putFile(contentUri)
             .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot?> {
                 override fun onSuccess(taskSnapshot: UploadTask.TaskSnapshot?) {
                     image.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(uri: Uri) {
                             Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+
+                            if (selected == 0) {
+                                db?.insertHatData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 1) {
+                                db?.insertShirtData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 2) {
+                                db?.insertPantsData(Clothing(contentUri, clothingTitle))
+                            }
+
+                            if (selected == 3) {
+                                db?.insertShoesData(Clothing(contentUri, clothingTitle))
+                            }
                         }
                     })
                     Toast.makeText(requireActivity(), "Image Is Uploaded.", Toast.LENGTH_SHORT)
                         .show()
+
+
+
+
+
                 }
             }).addOnFailureListener(object : OnFailureListener {
                 override fun onFailure(e: Exception) {
