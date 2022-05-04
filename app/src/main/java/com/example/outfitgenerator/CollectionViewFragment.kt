@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.outfitgenerator.databinding.ActivityMainBinding
 import com.example.outfitgenerator.databinding.FragmentCollectionviewBinding
 import com.firebase.ui.auth.data.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +34,7 @@ private const val TAG = "CollectionViewFragment"
 
 private lateinit var uploadbutton: FloatingActionButton
 
-
+private var firstLoad = true //Fix for data duplication error
 class CollectionViewFragment: Fragment() {
     private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
@@ -43,7 +42,7 @@ class CollectionViewFragment: Fragment() {
     private lateinit var itemButton: Button
     private lateinit var outfitButton: Button
     private lateinit var binding: FragmentCollectionviewBinding
-    private var firstLoad = true //Test function variable
+     //Test function variable
     private var adapter: CollectionAdapter? = null
 
     /**
@@ -94,33 +93,25 @@ class CollectionViewFragment: Fragment() {
         }
 
         // This produces a grid of clothing from the database.
-        if(firstLoad) {
-            popCollection()
+        if(firstLoad == true) {
             firstLoad = false
-        }
-        getData()
-        val CollectionViewFragment = this
-        binding.collectionRecyclerView.apply{
-            layoutManager = GridLayoutManager(context, 3)
-            adapter = CollectionAdapter(collectionList)
-        }
+            getData()
 
+        }
+            val CollectionViewFragment = this
+            binding.collectionRecyclerView.apply {
+                layoutManager = GridLayoutManager(context, 3)
+                adapter = CollectionAdapter(collectionList)
+            }
 
         return view
     } //End of onCreateView()
 
-    // Testing function
-    private fun popCollection(){
-        val item1 = Collection("Blue Hat", "Hat")
-        collectionList.add(item1)
-        val item2 = Collection("White Shirt", "Shirt")
-        collectionList.add(item2)
-    }
-
     //This function pulls data from the database for the CollectionView.
     private fun getData(){
+
         database2 = FirebaseFirestore.getInstance()
-        database2.collection("ClothingCollection").orderBy("ClothingID").addSnapshotListener(object:
+        database2.collection("sampleData").addSnapshotListener(object:
             EventListener<QuerySnapshot>{
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?){
                 if (error != null){
@@ -136,8 +127,6 @@ class CollectionViewFragment: Fragment() {
         })
 
     } //End of getData()
-
-
 
     //add a listener to the Edit Text View Widget we just created
     override fun onStart() {

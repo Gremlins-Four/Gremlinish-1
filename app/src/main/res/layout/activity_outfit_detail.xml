@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="600dp"
+    android:orientation="vertical"
+    tools:context=".outfitDetailActivity">
+
+    <ImageView
+        android:id="@+id/hat_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/clothing_image"
+        android:src="@drawable/jorts" />
+    <ImageView
+        android:id="@+id/shirt_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/jorts"
+        android:contentDescription="@string/clothing_image"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/pants_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/clothing_image"
+        android:src="@drawable/jorts" />
+    <ImageView
+        android:id="@+id/shoes_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/jorts"
+        android:contentDescription="@string/clothing_image"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

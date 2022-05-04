@@ -119,7 +119,6 @@ class FirstFragment: Fragment() {
 
         //ImageView containers
         //Outfit Generator
-
         randombutton.setOnClickListener {
             val hat = randomizeHats()
             val shirt = randomizeShirt()
@@ -138,21 +137,26 @@ class FirstFragment: Fragment() {
             callbacks?.startCollectionViewFragment()
         }
         saveoutfitbutton.setOnClickListener {
-
+            //saveOutfitToDatabase()
         }
         //uploadbutton.setOnClickListener {
         //    callbacks?.startPhotoFragment()
         //}
         return view
 
-    }
+    } //End onCreateView
 
     override fun onDetach() {
         super.onDetach()
         callbacks = null
     }
 
-    fun downloadPhoto(photoTitle: Clothing?): Bitmap? {
+    fun saveOutfitToDatabase(){
+        //val newOutfit = hashMapOf("HatImage" to, "ShirtImage" to, "PantsImage to, "ShoesImage" to)
+    }
+
+    fun downloadPhoto(photoTitle: String): Bitmap? {
+
         var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")
         var Bitmap: Bitmap? = null
 

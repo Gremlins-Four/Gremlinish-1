@@ -60,6 +60,7 @@ open class PhotoFragment: Fragment() {
     private lateinit var insertbutton: Button
     private lateinit var selectedImage: ImageView
     private lateinit var currentPhotoPath: String
+    private lateinit var tagItem: String
 
 
     var selected = 0
@@ -107,7 +108,7 @@ open class PhotoFragment: Fragment() {
 
 
         //points to and references to firestore file/folderpath (not storage—where the photos are stored)
-        val database = FirebaseFirestore.getInstance().document("sampleData/collection")
+        val database = FirebaseFirestore.getInstance()//.document("sampleData/collection")
 
 
         /*
@@ -127,10 +128,14 @@ open class PhotoFragment: Fragment() {
 
         //saves title to firestore, thats about it
         fun saveToDatabase() {
-            val clothingTitle = titleField.text.toString()
+
+
+
+            val clothingTitle = titleField.getText().toString()
+            val clothingTag = tagItem
 
             val newClothing = hashMapOf(
-                "title" to clothingTitle
+                "title" to clothingTitle, "tag" to clothingTag
             )
 
             val toast1 = Toast.makeText(requireActivity(),"Saving", Toast.LENGTH_SHORT)
@@ -138,7 +143,7 @@ open class PhotoFragment: Fragment() {
             // val newImage = hashMapof
             // or Bitmap???
 
-            database.collection("Wardrobe")
+            database.collection("sampleData")
                 .add(newClothing)
                 .addOnSuccessListener { documentReference ->
                     Log.d(ContentValues.TAG, "ClothingSnapshot added with ID: ${documentReference}")
@@ -162,6 +167,8 @@ open class PhotoFragment: Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val item = parent?.getItemAtPosition(position).toString()
+
+                    tagItem = parent?.getItemAtPosition(position).toString()
 
                 if (item == "Hat"){
                     selected = 0
