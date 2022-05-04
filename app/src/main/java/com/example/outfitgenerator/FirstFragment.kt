@@ -26,6 +26,10 @@ class FirstFragment: Fragment() {
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
     private lateinit var saveoutfitbutton: Button
+    private lateinit var hatImageView: ImageView
+    private lateinit var shirtImageView: ImageView
+    private lateinit var pantsImageView: ImageView
+    private lateinit var shoesImageView: ImageView
 
 
     //val context = this
@@ -67,10 +71,10 @@ class FirstFragment: Fragment() {
         saveoutfitbutton.isEnabled = false
 
         // Set ImageView containers
-        val hatImageView: ImageView = view.findViewById(R.id.temp_hat_text)
-        val shirtImageView: ImageView = view.findViewById(R.id.temp_shirt_text)
-        val pantsImageView: ImageView = view.findViewById(R.id.temp_pants_text)
-        val shoesImageView: ImageView = view.findViewById(R.id.temp_shoes_text)
+        hatImageView= view.findViewById(R.id.temp_hat_text)
+        shirtImageView= view.findViewById(R.id.temp_shirt_text)
+        pantsImageView= view.findViewById(R.id.temp_pants_text)
+        shoesImageView= view.findViewById(R.id.temp_shoes_text)
 
         val dbHelper = DBHandler(requireActivity())
         //val db = dbHelper.readableDatabase
@@ -78,40 +82,40 @@ class FirstFragment: Fragment() {
 
         fun randomizeHats(): Bitmap? {
             var hats = dbHelper?.readHatData()
-            var sizeHat = hats?.size
-            var randomHats: Int? = sizeHat?.let { Random.nextInt(0, it) }
+            var sizeHat = hats!!.size
+            var randomHats =  Random.nextInt(0, sizeHat)
             if (randomHats != null) {
-                return downloadPhoto(hats?.get(randomHats) as String)
+                return hats?.get(randomHats)?.let { downloadPhoto(it.image_title) }
             }
             return null
         }
 
         fun randomizeShirt(): Bitmap?{
             var shirts = dbHelper?.readShirtData()
-            var sizeShirt = shirts?.size
-            var randomShirt: Int? = sizeShirt?.let { Random.nextInt(0, it) }
+            var sizeShirt = shirts!!.size
+            var randomShirt = Random.nextInt(0, sizeShirt)
             if (randomShirt != null) {
-                return downloadPhoto(shirts?.get(randomShirt) as String)
+                return shirts?.get(randomShirt)?.let { downloadPhoto(it.image_title) }
            }
            return null
         }
 
         fun randomizePants(): Bitmap?{
             var pants = dbHelper?.readPantsData()
-            var sizePants = pants?.size
-            var randomPants: Int? = sizePants?.let{ Random.nextInt(0, it) }
+            var sizePants = pants!!.size
+            var randomPants = Random.nextInt(0, sizePants)
             if (randomPants != null) {
-               return downloadPhoto(pants?.get(randomPants) as String)
+               return pants?.get(randomPants)?.let { downloadPhoto(it.image_title) }
             }
             return null
         }
 
         fun randomizeShoes(): Bitmap?{
             var shoes = dbHelper?.readShoesData()
-            var sizeShoes = shoes?.size
-            var randomShoes: Int? = sizeShoes?.let{ Random.nextInt(0, it) }
+            var sizeShoes = shoes!!.size
+            var randomShoes = Random.nextInt(0, sizeShoes)
             if (randomShoes != null) {
-                return downloadPhoto(shoes?.get(randomShoes) as String)
+                return shoes?.get(randomShoes)?.let { downloadPhoto(it.image_title) }
             }
             return null
         }

@@ -6,28 +6,54 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper as SQLiteOpenHelper
 import android.content.Context
 import android.net.Uri
+import android.provider.BaseColumns
+import android.provider.ContactsContract
 import androidx.core.database.getIntOrNull
 import androidx.fragment.app.FragmentActivity
 
+object DatabaseContract{
+    object Hats: BaseColumns{
+        const val TABLE_HATS = "Hats"
+        const val HATS_ID_COL = "HatImageID"
+        const val HATS_NAME_COL = "HatImageName"
+    }
+    object Shirts: BaseColumns {
+        const val TABLE_SHIRTS = "Shirts"
+        const val SHIRTS_ID_COL = "ShirtsImageID"
+        const val SHIRTS_NAME_COL = "ShirtImageName"
+    }
+    object Pants: BaseColumns{
+        const val TABLE_PANTS = "Pants"
+        const val PANTS_ID_COL = "PantsImageID"
+        const val PANTS_NAME_COL = "PantsImageName"
+    }
+    object Shoes: BaseColumns{
+        const val TABLE_SHOES = "Shoes"
+        const val SHOES_ID_COL = "ShoesImageID"
+        const val SHOES_NAME_COL = "ShoesImageName"
+    }
+}
 
-private const val DATABASE_NAME = "OutfitGenDB"
-private const val DATABASE_VERSION = 1
+private const val CREATE_HATS ="CREATE TABLE ${DatabaseContract.Hats.TABLE_HATS}("+
+        "${DatabaseContract.Hats.HATS_ID_COL} INTEGER PRIMARY KEY, " +
+        "${DatabaseContract.Hats.HATS_NAME_COL} TEXT)"
 
-private const val TABLE_HATS = "Hats"
-private const val HATS_ID_COL = "HatImageID"
-private const val HATS_NAME_COL = "HatImageName"
+private const val CREATE_SHIRTS ="CREATE TABLE ${DatabaseContract.Shirts.TABLE_SHIRTS}("+
+        "${DatabaseContract.Shirts.SHIRTS_ID_COL} INTEGER PRIMARY KEY, " +
+        "${DatabaseContract.Shirts.SHIRTS_NAME_COL} TEXT)"
 
-private const val TABLE_SHIRTS = "Shirts"
-private const val SHIRTS_ID_COL = "ShirtsImageID"
-private const val SHIRTS_NAME_COL = "ShirtImageName"
+private const val CREATE_PANTS ="CREATE TABLE ${DatabaseContract.Pants.TABLE_PANTS}("+
+        "${DatabaseContract.Pants.PANTS_ID_COL} INTEGER PRIMARY KEY, " +
+        "${DatabaseContract.Pants.PANTS_NAME_COL} TEXT)"
 
-private const val TABLE_PANTS = "Pants"
-private const val PANTS_ID_COL = "PantsImageID"
-private const val PANTS_NAME_COL = "PantsImageName"
+private const val CREATE_SHOES ="CREATE TABLE ${DatabaseContract.Shoes.TABLE_SHOES}("+
+        "${DatabaseContract.Shoes.SHOES_ID_COL} INTEGER PRIMARY KEY, " +
+        "${DatabaseContract.Shoes.SHOES_NAME_COL} TEXT)"
 
-private const val TABLE_SHOES = "Shoes"
-private const val SHOES_ID_COL = "ShoesImageID"
-private const val SHOES_NAME_COL = "ShoesImageName"
+private const val DELETE_HATS="DROP TABLE IF EXISTS ${DatabaseContract.Hats.TABLE_HATS}"
+private const val DELETE_SHIRTS="DROP TABLE IF EXISTS ${DatabaseContract.Shirts.TABLE_SHIRTS}"
+private const val DELETE_PANTS="DROP TABLE IF EXISTS ${DatabaseContract.Pants.TABLE_PANTS}"
+private const val DELETE_SHOES="DROP TABLE IF EXISTS ${DatabaseContract.Shoes.TABLE_SHOES}"
 
 
 /*
@@ -40,42 +66,29 @@ when you wan to insert , call db.insertData(clothing)
 
 class DBHandler(context: Context):
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {  // ??
-    override fun onCreate(db: SQLiteDatabase?) {
+    override fun onCreate(db: SQLiteDatabase) {
+            db.execSQL(CREATE_HATS)
+            db.execSQL(CREATE_SHIRTS)
+            db.execSQL(CREATE_PANTS)
+            db.execSQL(CREATE_SHOES)
 
-        val query1 =("CREATE TABLE " + TABLE_HATS + " ("
-                + HATS_ID_COL + "INTEGER PRIMARY KEY, "
-                + HATS_NAME_COL + "TEXT)")
-
-        val query2 =("CREATE TABLE " + TABLE_SHIRTS + " ("
-                + SHIRTS_ID_COL + "INTEGER PRIMARY KEY, "
-                + SHIRTS_NAME_COL + "TEXT)")
-
-        val query3 =("CREATE TABLE " + TABLE_PANTS + " ("
-                + PANTS_ID_COL + "INTEGER PRIMARY KEY, "
-                + PANTS_NAME_COL + "TEXT)")
-
-        val query4 =("CREATE TABLE " + TABLE_SHOES + " ("
-                + SHOES_ID_COL + "INTEGER PRIMARY KEY, "
-                + SHOES_NAME_COL + "TEXT)")
-
-
-        if (db != null) {
-            db.execSQL(query1)
-            db.execSQL(query2)
-            db.execSQL(query3)
-            db.execSQL(query4)
-        }
     }
 
 
-    override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        if (db != null) {
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_HATS")
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_SHIRTS")
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_PANTS")
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_SHOES")
-        }
+    override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
+        db.execSQL(DELETE_HATS)
+        db.execSQL(DELETE_SHIRTS)
+        db.execSQL(DELETE_PANTS)
+        db.execSQL(DELETE_SHOES)
         onCreate(db)
+    }
+
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        onUpgrade(db, oldVersion, newVersion)
+    }
+    companion object{
+        const val DATABASE_VERSION=1
+        const val DATABASE_NAME="OutfitGenDB"
     }
 
 
@@ -84,10 +97,10 @@ class DBHandler(context: Context):
     */
     fun insertHatData(clothing: Clothing): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(HATS_ID_COL, clothing.id)
-        contentValues.put(HATS_NAME_COL, clothing.image_title)
-        return db.insert(TABLE_HATS, null, contentValues)
+        val contentValues = ContentValues().apply{
+        put(DatabaseContract.Hats.HATS_ID_COL, clothing.id)
+        put(DatabaseContract.Hats.HATS_NAME_COL, clothing.image_title)}
+        return db.insert(DatabaseContract.Hats.TABLE_HATS, null, contentValues)
     }
 
 
@@ -96,10 +109,12 @@ class DBHandler(context: Context):
     */
     fun insertShirtData(clothing: Clothing): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(SHIRTS_ID_COL, clothing.id)
-        contentValues.put(SHIRTS_NAME_COL, clothing.image_title)
-        return db.insert(TABLE_SHIRTS, null, contentValues)
+        val contentValues = ContentValues().apply{
+        put(DatabaseContract.Shirts.SHIRTS_ID_COL, clothing.id)
+        put(DatabaseContract.Shirts.SHIRTS_NAME_COL, clothing.image_title)}
+        return db.insert(DatabaseContract.Shirts.TABLE_SHIRTS, null, contentValues)
+
+
     }
 
 
@@ -108,10 +123,10 @@ class DBHandler(context: Context):
     */
     fun insertPantsData(clothing: Clothing): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(PANTS_ID_COL, clothing.id)
-        contentValues.put(PANTS_NAME_COL, clothing.image_title)
-        return db.insert(TABLE_PANTS, null, contentValues)
+        val contentValues = ContentValues().apply{
+        put(DatabaseContract.Pants.PANTS_ID_COL, clothing.id)
+        put(DatabaseContract.Pants.PANTS_NAME_COL, clothing.image_title)}
+        return db.insert(DatabaseContract.Pants.TABLE_PANTS, null, contentValues)
     }
 
 
@@ -120,10 +135,10 @@ class DBHandler(context: Context):
     */
     fun insertShoesData(clothing: Clothing): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(SHOES_ID_COL, clothing.id)
-        contentValues.put(SHOES_NAME_COL, clothing.image_title)
-        return db.insert(TABLE_SHOES, null, contentValues)
+        val contentValues = ContentValues().apply{
+        put(DatabaseContract.Shoes.SHOES_ID_COL, clothing.id)
+        put(DatabaseContract.Shoes.SHOES_NAME_COL, clothing.image_title)}
+        return db.insert(DatabaseContract.Shoes.TABLE_SHOES, null, contentValues)
     }
 
 
@@ -134,13 +149,13 @@ class DBHandler(context: Context):
     fun readHatData(): MutableList<Clothing>{
         val clothingList = mutableListOf<Clothing>()
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_HATS"
+        val query = "SELECT * FROM ${DatabaseContract.Hats.TABLE_HATS}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(Uri.EMPTY)  // ??
-                clothing.id = result.getInt(result.getColumnIndex(HATS_ID_COL))
-                clothing.image_title = result.getString(result.getColumnIndex(HATS_NAME_COL))
+                var id = result.getString(result.getColumnIndex(DatabaseContract.Hats.HATS_ID_COL))
+                var image_title = result.getString(result.getColumnIndex(DatabaseContract.Hats.HATS_NAME_COL))
+                var clothing: Clothing = Clothing(id, image_title)
                 clothingList.add(clothing)
             }
             while(result.moveToNext())
@@ -156,13 +171,13 @@ class DBHandler(context: Context):
     fun readShirtData(): MutableList<Clothing>{
         val clothingList = mutableListOf<Clothing>()
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_SHIRTS"
+        val query = "SELECT * FROM ${DatabaseContract.Shirts.TABLE_SHIRTS}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(Uri.EMPTY)  // ??
-                clothing.id = result.getInt(result.getColumnIndex(SHIRTS_ID_COL))
-                clothing.image_title = result.getString(result.getColumnIndex(SHIRTS_NAME_COL))
+                var id = result.getString(result.getColumnIndex(DatabaseContract.Shirts.SHIRTS_ID_COL))
+                var image_title = result.getString(result.getColumnIndex(DatabaseContract.Shirts.SHIRTS_NAME_COL))
+                var clothing: Clothing = Clothing(id, image_title)
                 clothingList.add(clothing)
             }
             while(result.moveToNext())
@@ -178,13 +193,13 @@ class DBHandler(context: Context):
     fun readPantsData(): MutableList<Clothing>{
         val clothingList = mutableListOf<Clothing>()
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_PANTS"
+        val query = "SELECT * FROM ${DatabaseContract.Pants.TABLE_PANTS}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(Uri.EMPTY)  // ??
-                clothing.id = result.getInt(result.getColumnIndex(PANTS_ID_COL))
-                clothing.image_title = result.getString(result.getColumnIndex(PANTS_NAME_COL))
+                var id = result.getString(result.getColumnIndex(DatabaseContract.Pants.PANTS_ID_COL))
+                var image_title = result.getString(result.getColumnIndex(DatabaseContract.Pants.PANTS_NAME_COL))
+                var clothing: Clothing = Clothing(id, image_title)
                 clothingList.add(clothing)
             }
             while(result.moveToNext())
@@ -200,13 +215,13 @@ class DBHandler(context: Context):
     fun readShoesData(): MutableList<Clothing>{
         val clothingList = mutableListOf<Clothing>()
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_SHOES"
+        val query = "SELECT * FROM ${DatabaseContract.Shoes.TABLE_SHOES}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()){
             do{
-                val clothing = Clothing(Uri.EMPTY)  // ??
-                clothing.id = result.getInt(result.getColumnIndex(SHOES_ID_COL))
-                clothing.image_title = result.getString(result.getColumnIndex(SHOES_NAME_COL))
+                var id = result.getString(result.getColumnIndex(DatabaseContract.Shoes.SHOES_ID_COL))
+                var image_title = result.getString(result.getColumnIndex(DatabaseContract.Shoes.SHOES_NAME_COL))
+                var clothing: Clothing = Clothing(id, image_title)
                 clothingList.add(clothing)
             }
             while(result.moveToNext())
