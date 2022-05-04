@@ -81,7 +81,7 @@ class FirstFragment: Fragment() {
             var sizeHat = hats?.size
             var randomHats: Int? = sizeHat?.let { Random.nextInt(0, it) }
             if (randomHats != null) {
-                return downloadPhoto(hats?.get(randomHats))
+                return downloadPhoto(hats?.get(randomHats) as String)
             }
             return null
         }
@@ -91,7 +91,7 @@ class FirstFragment: Fragment() {
             var sizeShirt = shirts?.size
             var randomShirt: Int? = sizeShirt?.let { Random.nextInt(0, it) }
             if (randomShirt != null) {
-                return downloadPhoto(shirts?.get(randomShirt))
+                return downloadPhoto(shirts?.get(randomShirt) as String)
            }
            return null
         }
@@ -101,7 +101,7 @@ class FirstFragment: Fragment() {
             var sizePants = pants?.size
             var randomPants: Int? = sizePants?.let{ Random.nextInt(0, it) }
             if (randomPants != null) {
-               return downloadPhoto(pants?.get(randomPants))
+               return downloadPhoto(pants?.get(randomPants) as String)
             }
             return null
         }
@@ -111,7 +111,7 @@ class FirstFragment: Fragment() {
             var sizeShoes = shoes?.size
             var randomShoes: Int? = sizeShoes?.let{ Random.nextInt(0, it) }
             if (randomShoes != null) {
-                return downloadPhoto(shoes?.get(randomShoes))
+                return downloadPhoto(shoes?.get(randomShoes) as String)
             }
             return null
         }
