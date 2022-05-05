@@ -166,7 +166,7 @@ class FirstFragment: Fragment() {
             mStorageReference.getFile(localFile).addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                     Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
                         .show()
-                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                    val bitmap: Bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                     Bitmap = bitmap
                 }).addOnFailureListener(OnFailureListener {
                     Toast.makeText(
