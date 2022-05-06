@@ -1,9 +1,11 @@
 package com.example.outfitgenerator
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.androidx.scope.requireScopeActivity
@@ -26,6 +29,10 @@ class FirstFragment: Fragment() {
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
     private lateinit var saveoutfitbutton: Button
+    private lateinit var uriHat: String
+    private lateinit var uriShirt: String
+    private lateinit var uriPants: String
+    private lateinit var uriShoes: String
 
 
     //val context = this
@@ -81,17 +88,21 @@ class FirstFragment: Fragment() {
             var sizeHat = hats?.size
             var randomHats: Int? = sizeHat?.let { Random.nextInt(0, it) }
             if (randomHats != null) {
-                return downloadPhoto(hats?.get(randomHats).image_title.toString())
+                return downloadPhoto(hats?.get(randomHats) as String)
+                uriHat = randomHats as String
+                //return downloadPhoto(hats?.get(randomHats).image_title.toString())
             }
             return null
         }
-
         fun randomizeShirt(): Bitmap?{
             var shirts = dbHelper?.readShirtData()
             var sizeShirt = shirts?.size
             var randomShirt: Int? = sizeShirt?.let { Random.nextInt(0, it) }
             if (randomShirt != null) {
-                return downloadPhoto(shirts?.get(randomShirt).image_title.toString())
+                return downloadPhoto(shirts?.get(randomShirt) as String)
+                uriHat = randomShirt as String
+                //return downloadPhoto(shirts?.get(randomShirt).image_title.toString())
+
            }
            return null
         }
@@ -101,7 +112,11 @@ class FirstFragment: Fragment() {
             var sizePants = pants?.size
             var randomPants: Int? = sizePants?.let{ Random.nextInt(0, it) }
             if (randomPants != null) {
-               return downloadPhoto(pants?.get(randomPants).image_title.toString())
+               return downloadPhoto(pants?.get(randomPants) as String)
+                uriHat = randomPants as String
+
+               //return downloadPhoto(pants?.get(randomPants).image_title.toString())
+
             }
             return null
         }
@@ -111,8 +126,10 @@ class FirstFragment: Fragment() {
             var sizeShoes = shoes?.size
             var randomShoes: Int? = sizeShoes?.let{ Random.nextInt(0, it) }
             if (randomShoes != null) {
-                val imageName = shoes?.get(randomShoes).image_title.toString()
-                return downloadPhoto(imageName)
+                return downloadPhoto(shoes?.get(randomShoes) as String)
+                uriHat = randomShoes as String
+                //val imageName = shoes?.get(randomShoes).image_title.toString()
+                //return downloadPhoto(imageName)
             }
             return null
         }
@@ -138,7 +155,7 @@ class FirstFragment: Fragment() {
             callbacks?.startCollectionViewFragment()
         }
         saveoutfitbutton.setOnClickListener {
-            //saveOutfitToDatabase()
+            saveOutfitToDatabase(uriHat, uriShirt, uriPants, uriShoes)
         }
         //uploadbutton.setOnClickListener {
         //    callbacks?.startPhotoFragment()
@@ -151,9 +168,19 @@ class FirstFragment: Fragment() {
         super.onDetach()
         callbacks = null
     }
-
-    fun saveOutfitToDatabase(){
-        //val newOutfit = hashMapOf("HatImage" to, "ShirtImage" to, "PantsImage to, "ShoesImage" to)
+    val database = FirebaseFirestore.getInstance()
+    fun saveOutfitToDatabase(uriHat: String, uriShirt: String, uriPants: String, uriShoes: String){
+        val newOutfit = hashMapOf("HatImage" to uriHat, "ShirtImage" to uriShirt, "PantsImage" to uriPants, "ShoesImage" to uriShoes)
+        database.collection("outfits")
+            .add(newOutfit)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "OutfitSnapshot added with ID: ${documentReference}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding outfit", e)
+            }
+        val toast3 = Toast.makeText(requireActivity(), "Saved", Toast.LENGTH_LONG)
+        toast3.show()
     }
 
     fun downloadPhoto(photoTitle: String): Bitmap? {
