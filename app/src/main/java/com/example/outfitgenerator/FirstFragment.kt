@@ -80,44 +80,105 @@ class FirstFragment: Fragment() {
         //val db = dbHelper.readableDatabase
         val hello = 2
 
-        fun randomizeHats(): Bitmap? {
-            var hats = dbHelper?.readHatData()
-            var sizeHat = hats!!.size
-            var randomHats =  Random.nextInt(0, sizeHat)
-            if (randomHats != null) {
-                return hats?.get(randomHats)?.let { downloadPhoto(it.image_title) }
-            }
-            return null
+        val hatList= listOf(
+            "buckethat",
+            "helmet",
+            "twinshat",
+            "winterhat",
+            "viking",
+            "cheesehead",
+        )
+
+        val shirtList= listOf(
+            "dressshirt",
+            "graphictee",
+            "tanktop",
+            "sweatshirt",
+            "brotank",
+            "pirate"
+        )
+
+        val pantsList= listOf(
+            "khakis",
+            "pjpants",
+            "redshirt",
+            "jorts",
+            "whitejeans",
+            "hammerpants"
+        )
+
+        val shoesList=listOf(
+            "boots",
+            "converse",
+            "crocs",
+            "highheels",
+            "newb",
+            "dadsandals"
+        )
+
+        fun randomizeHats(): Int {
+            val hatContext: Context = hatImageView.getContext()
+            var randomHats = Random.nextInt(0,5)
+            val hats = hatList [randomHats]
+            val hatsId =
+                requireContext().resources.getIdentifier(hats, "drawable", requireContext().packageName)
+//            var hats = dbHelper?.readHatData()
+//            var sizeHat = hats!!.size
+//            var randomHats =  Random.nextInt(0, sizeHat)
+//            if (randomHats != null) {
+//                return hats?.get(randomHats)?.let { downloadPhoto(it.image_title) }
+//            }
+//            return null
+            return hatsId
         }
 
-        fun randomizeShirt(): Bitmap?{
-            var shirts = dbHelper?.readShirtData()
-            var sizeShirt = shirts!!.size
-            var randomShirt = Random.nextInt(0, sizeShirt)
-            if (randomShirt != null) {
-                return shirts?.get(randomShirt)?.let { downloadPhoto(it.image_title) }
-           }
-           return null
+        fun randomizeShirt(): Int{
+            val shirtContext: Context = shirtImageView.getContext()
+            var randomShirts = Random.nextInt(0,5)
+            val shirts = shirtList [randomShirts]
+            val shirtsId =
+                requireContext().resources.getIdentifier(shirts, "drawable", requireContext().packageName)
+//            var shirts = dbHelper?.readShirtData()
+//            var sizeShirt = shirts!!.size
+//            var randomShirt = Random.nextInt(0, sizeShirt)
+//            if (randomShirt != null) {
+//                return shirts?.get(randomShirt)?.let { downloadPhoto(it.image_title) }
+//           }
+//           return null
+            return shirtsId
+
         }
 
-        fun randomizePants(): Bitmap?{
-            var pants = dbHelper?.readPantsData()
-            var sizePants = pants!!.size
-            var randomPants = Random.nextInt(0, sizePants)
-            if (randomPants != null) {
-               return pants?.get(randomPants)?.let { downloadPhoto(it.image_title) }
-            }
-            return null
+        fun randomizePants(): Int{
+            val pantsContext: Context = pantsImageView.getContext()
+            var randomPants = Random.nextInt(0,5)
+            val pants = pantsList [randomPants]
+            val pantsId =
+                requireContext().resources.getIdentifier(pants, "drawable", requireContext().packageName)
+//            var pants = dbHelper?.readPantsData()
+//            var sizePants = pants!!.size
+//            var randomPants = Random.nextInt(0, sizePants)
+//            if (randomPants != null) {
+//               return pants?.get(randomPants)?.let { downloadPhoto(it.image_title) }
+//            }
+//            return null
+            return pantsId
         }
 
-        fun randomizeShoes(): Bitmap?{
-            var shoes = dbHelper?.readShoesData()
-            var sizeShoes = shoes!!.size
-            var randomShoes = Random.nextInt(0, sizeShoes)
-            if (randomShoes != null) {
-                return shoes?.get(randomShoes)?.let { downloadPhoto(it.image_title) }
-            }
-            return null
+        fun randomizeShoes(): Int{
+            val shoesContext: Context = shoesImageView.getContext()
+            var randomShoes = Random.nextInt(0,5)
+            val shoes = shoesList [randomShoes]
+            val shoesId =
+                requireContext().resources.getIdentifier(shoes, "drawable", requireContext().packageName)
+//            var shoes = dbHelper?.readShoesData()
+//            var sizeShoes = shoes!!.size
+//            var randomShoes = Random.nextInt(0, sizeShoes)
+//            if (randomShoes != null) {
+//                return shoes?.get(randomShoes)?.let { downloadPhoto(it.image_title) }
+//            }
+//            return null
+            return shoesId
         }
 
 
@@ -129,10 +190,10 @@ class FirstFragment: Fragment() {
             val pant = randomizePants()
             val shoe = randomizeShoes()
 
-            hatImageView.setImageBitmap(hat)
-            shirtImageView.setImageBitmap(shirt)
-            pantsImageView.setImageBitmap(pant)
-            shoesImageView.setImageBitmap(shoe)
+            hatImageView.setImageResource(hat)
+            shirtImageView.setImageResource(shirt)
+            pantsImageView.setImageResource(pant)
+            shoesImageView.setImageResource(shoe)
             saveoutfitbutton.isEnabled = true
         }
 
