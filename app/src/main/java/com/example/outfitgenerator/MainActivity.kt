@@ -21,15 +21,17 @@ import android.net.Uri
 import android.os.Environment
 import android.os.PersistableBundle
 import android.widget.*
-import com.example.outfitgenerator.databinding.ActivityMainBinding
+import androidx.fragment.app.FragmentActivity
+// import com.example.outfitgenerator.databinding.ActivityMainBinding
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.lang.reflect.Array.newInstance
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks, OutfitFragment.Callbacks {
+class MainActivity : FragmentActivity(), FirstFragment.Callbacks, PhotoFragment.Callbacks, CollectionViewFragment.Callbacks, OutfitFragment.Callbacks {
     val CLOTHING_KEY = "clothes"
     val TAG = "ClothingArticle"
     private lateinit var iv_image: ImageView
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
         setContentView(R.layout.activity_main)
         // iv_image = findViewById(R.id.iv_image)
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
         if (currentFragment == null){
             val fragment = FirstFragment()
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), FirstFragment.Callbacks, PhotoFragment
 
 
     }
+
 
     override fun startPhotoFragment() {
         val fragment1 = PhotoFragment()

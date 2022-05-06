@@ -90,6 +90,7 @@ class FirstFragment: Fragment() {
             if (randomHats != null) {
                 return downloadPhoto(hats?.get(randomHats) as String)
                 uriHat = randomHats as String
+                //return downloadPhoto(hats?.get(randomHats).image_title.toString())
             }
             return null
         }
@@ -100,6 +101,8 @@ class FirstFragment: Fragment() {
             if (randomShirt != null) {
                 return downloadPhoto(shirts?.get(randomShirt) as String)
                 uriHat = randomShirt as String
+                //return downloadPhoto(shirts?.get(randomShirt).image_title.toString())
+
            }
            return null
         }
@@ -111,6 +114,9 @@ class FirstFragment: Fragment() {
             if (randomPants != null) {
                return downloadPhoto(pants?.get(randomPants) as String)
                 uriHat = randomPants as String
+
+               //return downloadPhoto(pants?.get(randomPants).image_title.toString())
+
             }
             return null
         }
@@ -122,6 +128,8 @@ class FirstFragment: Fragment() {
             if (randomShoes != null) {
                 return downloadPhoto(shoes?.get(randomShoes) as String)
                 uriHat = randomShoes as String
+                //val imageName = shoes?.get(randomShoes).image_title.toString()
+                //return downloadPhoto(imageName)
             }
             return null
         }
@@ -182,8 +190,7 @@ class FirstFragment: Fragment() {
 
         try {
             val localFile = File.createTempFile("newPhoto","jpg")
-            mStorageReference.getFile(localFile)
-                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+            mStorageReference.getFile(localFile).addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                     Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
                         .show()
                     val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)

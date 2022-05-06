@@ -39,7 +39,7 @@ import java.util.*
 //import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
-
+var selected = 0
 
 open class PhotoFragment: Fragment() {
 
@@ -61,11 +61,6 @@ open class PhotoFragment: Fragment() {
     private lateinit var selectedImage: ImageView
     private lateinit var currentPhotoPath: String
     private lateinit var tagItem: String
-
-
-    var selected = 0
-
-
 
     /**
      * Required interface for hosting activities
@@ -166,23 +161,7 @@ open class PhotoFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val item = parent?.getItemAtPosition(position).toString()
-
-                    tagItem = parent?.getItemAtPosition(position).toString()
-
-                if (item == "Hat"){
-                    selected = 0
-                }
-                if (item == "Shirt"){
-                    selected = 1
-                }
-                if (item == "Pants"){
-                    selected = 2
-                }
-                if (item == "Shoes"){
-                    selected = 3
-                }
-
+                selected = position
             }
         }
 
@@ -329,20 +308,23 @@ open class PhotoFragment: Fragment() {
                         override fun onSuccess(uri: Uri) {
                             Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
 
+                            val sel = selected
+                            val hello = 2
+
                             if (selected == 0) {
-                                db?.insertHatData(Clothing(contentUri, clothingTitle))
+                                db?.insertHatData(Clothing(name, clothingTitle))
                             }
 
                             if (selected == 1) {
-                                db?.insertShirtData(Clothing(contentUri, clothingTitle))
+                                db?.insertShirtData(Clothing(name, clothingTitle))
                             }
 
                             if (selected == 2) {
-                                db?.insertPantsData(Clothing(contentUri, clothingTitle))
+                                db?.insertPantsData(Clothing(name, clothingTitle))
                             }
 
                             if (selected == 3) {
-                                db?.insertShoesData(Clothing(contentUri, clothingTitle))
+                                db?.insertShoesData(Clothing(name, clothingTitle))
                             }
                         }
                     })
