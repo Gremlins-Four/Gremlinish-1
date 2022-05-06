@@ -42,7 +42,7 @@ class CollectionViewFragment: Fragment() {
     private lateinit var itemButton: Button
     private lateinit var outfitButton: Button
     private lateinit var binding: FragmentCollectionviewBinding
-     //Test function variable
+    //Test function variable
     private var adapter: CollectionAdapter? = null
 
     /**
@@ -80,6 +80,7 @@ class CollectionViewFragment: Fragment() {
         // Click Listeners
         uploadbutton.setOnClickListener {
             callbacks?.startPhotoFragment()
+            // Go to photo upload layout
         }
         xButton.setOnClickListener {
             callbacks?.startFirstFragment()
@@ -99,6 +100,7 @@ class CollectionViewFragment: Fragment() {
 
         }
             val CollectionViewFragment = this
+            // This binds the data from the database to the clothing_item.xml
             binding.collectionRecyclerView.apply {
                 layoutManager = GridLayoutManager(context, 3)
                 adapter = CollectionAdapter(collectionList)
@@ -109,7 +111,6 @@ class CollectionViewFragment: Fragment() {
 
     //This function pulls data from the database for the CollectionView.
     private fun getData(){
-
         database2 = FirebaseFirestore.getInstance()
         database2.collection("sampleData").addSnapshotListener(object:
             EventListener<QuerySnapshot>{
