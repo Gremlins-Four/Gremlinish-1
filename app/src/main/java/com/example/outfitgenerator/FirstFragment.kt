@@ -1,9 +1,11 @@
 package com.example.outfitgenerator
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.androidx.scope.requireScopeActivity
@@ -26,10 +29,10 @@ class FirstFragment: Fragment() {
     private lateinit var randombutton: Button
     private lateinit var collectionbutton: Button
     private lateinit var saveoutfitbutton: Button
-    private lateinit var hatImageView: ImageView
-    private lateinit var shirtImageView: ImageView
-    private lateinit var pantsImageView: ImageView
-    private lateinit var shoesImageView: ImageView
+    private lateinit var uriHat: String
+    private lateinit var uriShirt: String
+    private lateinit var uriPants: String
+    private lateinit var uriShoes: String
 
 
     //val context = this
@@ -71,14 +74,15 @@ class FirstFragment: Fragment() {
         saveoutfitbutton.isEnabled = false
 
         // Set ImageView containers
-        hatImageView= view.findViewById(R.id.temp_hat_text)
-        shirtImageView= view.findViewById(R.id.temp_shirt_text)
-        pantsImageView= view.findViewById(R.id.temp_pants_text)
-        shoesImageView= view.findViewById(R.id.temp_shoes_text)
+        val hatImageView: ImageView = view.findViewById(R.id.temp_hat_text)
+        val shirtImageView: ImageView = view.findViewById(R.id.temp_shirt_text)
+        val pantsImageView: ImageView = view.findViewById(R.id.temp_pants_text)
+        val shoesImageView: ImageView = view.findViewById(R.id.temp_shoes_text)
 
         val dbHelper = DBHandler(requireActivity())
         //val db = dbHelper.readableDatabase
         val hello = 2
+
 
         val hatList= listOf(
             "buckethat",
@@ -179,6 +183,7 @@ class FirstFragment: Fragment() {
 //            }
 //            return null
             return shoesId
+          
         }
 
 
@@ -202,7 +207,7 @@ class FirstFragment: Fragment() {
             callbacks?.startCollectionViewFragment()
         }
         saveoutfitbutton.setOnClickListener {
-            //saveOutfitToDatabase()
+            saveOutfitToDatabase(uriHat, uriShirt, uriPants, uriShoes)
         }
         //uploadbutton.setOnClickListener {
         //    callbacks?.startPhotoFragment()
@@ -215,9 +220,19 @@ class FirstFragment: Fragment() {
         super.onDetach()
         callbacks = null
     }
-
-    fun saveOutfitToDatabase(){
-        //val newOutfit = hashMapOf("HatImage" to, "ShirtImage" to, "PantsImage to, "ShoesImage" to)
+    val database = FirebaseFirestore.getInstance()
+    fun saveOutfitToDatabase(uriHat: String, uriShirt: String, uriPants: String, uriShoes: String){
+        val newOutfit = hashMapOf("HatImage" to uriHat, "ShirtImage" to uriShirt, "PantsImage" to uriPants, "ShoesImage" to uriShoes)
+        database.collection("outfits")
+            .add(newOutfit)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "OutfitSnapshot added with ID: ${documentReference}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding outfit", e)
+            }
+        val toast3 = Toast.makeText(requireActivity(), "Saved", Toast.LENGTH_LONG)
+        toast3.show()
     }
 
     fun downloadPhoto(photoTitle: String): Bitmap? {
@@ -227,8 +242,7 @@ class FirstFragment: Fragment() {
 
         try {
             val localFile = File.createTempFile("newPhoto","jpg")
-            mStorageReference.getFile(localFile)
-                .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
+            mStorageReference.getFile(localFile).addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                     Toast.makeText(requireActivity(), "Picture Retrieved", Toast.LENGTH_SHORT)
                         .show()
                     val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)

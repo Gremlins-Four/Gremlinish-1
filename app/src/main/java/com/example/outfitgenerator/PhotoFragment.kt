@@ -32,7 +32,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import java.io.File
 import java.io.IOException
-import java.net.URI
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,7 +39,7 @@ import java.util.*
 //import java.io.IOException
 //import com.google.firebase.firestore.FirebaseFirestore
 
-
+var selected = 0
 
 open class PhotoFragment: Fragment() {
 
@@ -62,16 +61,6 @@ open class PhotoFragment: Fragment() {
     private lateinit var selectedImage: ImageView
     private lateinit var currentPhotoPath: String
     private lateinit var tagItem: String
-    private lateinit var imageUri: Uri
-    private lateinit var imageTitle: String
-    private lateinit var imageID: String
-
-
-    var selected = 0
-
-
-
-
 
     /**
      * Required interface for hosting activities
@@ -110,10 +99,6 @@ open class PhotoFragment: Fragment() {
         cancelbutton = view.findViewById(R.id.cancel_button)
         // This button will allow user to return to main layout
         spinner=view.findViewById<Spinner>(R.id.spinner)
-
-        imageTitle=""
-        imageUri = Uri.parse("")
-        imageID =""
 
 
 
@@ -176,23 +161,7 @@ open class PhotoFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //val item = parent?.getItemAtPosition(position).toString()
-
-                    tagItem = parent?.getItemAtPosition(position).toString()
-
-                if (tagItem == "Hat"){
-                    selected = 0
-                }
-                if (tagItem == "Shirt"){
-                    selected = 1
-                }
-                if (tagItem == "Pants"){
-                    selected = 2
-                }
-                if (tagItem == "Shoes"){
-                    selected = 3
-                }
-
+                selected = position
             }
         }
 
@@ -206,30 +175,8 @@ open class PhotoFragment: Fragment() {
 
         savebutton.setOnClickListener {
             // saveToDatabase()
-            //val clothingTitle = titleField.text.toString()
-            //val context = this
-            imageTitle=titleField.text.toString()
-            val db = DBHandler(requireActivity())
-            //val dbHelper =
-            val hello = 0
-            uploadImageToFirebase(imageTitle, imageUri)
-            if (selected == 0) {
-                db?.insertHatData(Clothing(imageID, imageTitle))
-            }
-
-            if (selected == 1) {
-                db?.insertShirtData(Clothing(imageID, imageTitle))
-            }
-
-            if (selected == 2) {
-                db?.insertPantsData(Clothing(imageID, imageTitle))
-            }
-
-            if (selected == 3) {
-                db?.insertShoesData(Clothing(imageID, imageTitle))
-            }
-
-            callbacks?.startCollectionViewFragment()
+            val clothingTitle = titleField.text.toString()
+            // uploadImageToFirebase(clothingTitle, URI)
 
         }
 
@@ -264,9 +211,7 @@ open class PhotoFragment: Fragment() {
                 val contentUri = Uri.fromFile(f)
                 mediaScanIntent.data = contentUri
                 requireActivity().sendBroadcast(mediaScanIntent)
-                imageUri=contentUri
-                imageID=contentUri.toString()
-                //uploadImageToFirebase(f.name, contentUri)
+                uploadImageToFirebase(f.name, contentUri)
             }
         }
 
@@ -277,9 +222,7 @@ open class PhotoFragment: Fragment() {
                 val imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri!!)
                 Log.d("tag", "onActivityResult: Gallery Image Uri:  $imageFileName")
                 selectedImage.setImageURI(contentUri)
-                imageUri=contentUri
-                imageID=contentUri.toString()
-                //uploadImageToFirebase(imageFileName, contentUri)
+                uploadImageToFirebase(imageFileName, contentUri)
 
             }
         }
@@ -352,6 +295,10 @@ open class PhotoFragment: Fragment() {
     //this is probably where we can upload the ID and tag info into the firestore so we can
     // retrieve the images later
     fun uploadImageToFirebase(name: String, contentUri: Uri) {
+        //val context = this
+        val db = DBHandler(requireActivity())
+        //val dbHelper =
+        val hello = 0
         val image = storageReference!!.child("pictures/$name")
         val clothingTitle = name
         image.putFile(contentUri)
@@ -361,6 +308,24 @@ open class PhotoFragment: Fragment() {
                         override fun onSuccess(uri: Uri) {
                             Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
 
+                            val sel = selected
+                            val hello = 2
+
+                            if (selected == 0) {
+                                db?.insertHatData(Clothing(name, clothingTitle))
+                            }
+
+                            if (selected == 1) {
+                                db?.insertShirtData(Clothing(name, clothingTitle))
+                            }
+
+                            if (selected == 2) {
+                                db?.insertPantsData(Clothing(name, clothingTitle))
+                            }
+
+                            if (selected == 3) {
+                                db?.insertShoesData(Clothing(name, clothingTitle))
+                            }
                         }
                     })
                     Toast.makeText(requireActivity(), "Image Is Uploaded.", Toast.LENGTH_SHORT)
