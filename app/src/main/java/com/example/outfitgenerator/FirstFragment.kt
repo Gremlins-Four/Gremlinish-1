@@ -33,6 +33,7 @@ class FirstFragment: Fragment() {
     private lateinit var uriShirt: String
     private lateinit var uriPants: String
     private lateinit var uriShoes: String
+    var outfitList = listOf(null)
 
 
     //val context = this
@@ -203,11 +204,13 @@ class FirstFragment: Fragment() {
         }
 
 
-        collectionbutton.setOnClickListener {
+        collectionbutton.setOnClickListener { // This button opens the CollectionViewFragment.
             callbacks?.startCollectionViewFragment()
         }
-        saveoutfitbutton.setOnClickListener {
-            saveOutfitToDatabase(uriHat, uriShirt, uriPants, uriShoes)
+        saveoutfitbutton.setOnClickListener { //This button takes the images in the imageviews and sends them as one object(Outfit) to the database.
+            //saveOutfitToDatabase(uriHat, uriShirt, uriPants, uriShoes)
+            var saveClothing = listOf(hatImageView, shirtImageView, pantsImageView, shoesImageView)
+            outfitList.plus(saveClothing)
         }
         //uploadbutton.setOnClickListener {
         //    callbacks?.startPhotoFragment()
