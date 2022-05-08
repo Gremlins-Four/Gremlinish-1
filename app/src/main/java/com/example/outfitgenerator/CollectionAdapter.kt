@@ -14,6 +14,8 @@ class CollectionAdapter(private val collection: List<Collection>): RecyclerView.
     }
 
     override fun onBindViewHolder(holder: CollectionViewHolder, position: Int){
+
+
         holder.bindCollection(collection[position])
     }
 

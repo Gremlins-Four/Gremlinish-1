@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
 
@@ -22,8 +22,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/clothing_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/jorts"
                 android:contentDescription="@string/clothing_image"/>
             <TextView
