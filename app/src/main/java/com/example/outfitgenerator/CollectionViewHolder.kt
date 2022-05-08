@@ -16,10 +16,16 @@ import java.io.IOException
 class CollectionViewHolder(private val clothingItemBinding: ClothingItemBinding): RecyclerView.ViewHolder(clothingItemBinding.root){
     fun bindCollection(collection: Collection){
         // This binds the data to the clothing_item.xml
-        clothingItemBinding.clothingImage.setImageBitmap(downloadPhoto(collection.title.toString()))
+        //var far = arrayOf(R.drawable.jorts, R.drawable.boots, R.drawable.buckethat )
+        //for(n in far.indices) {
+        //    clothingItemBinding.clothingImage.setImageResource(far[n])
+        //}
+        clothingItemBinding.clothingImage.setImageResource(collection.imageC as Int)
+        //clothingItemBinding.clothingImage.setImageBitmap(downloadPhoto(collection.title.toString()))
         clothingItemBinding.clothingTitle.text = collection.title
         clothingItemBinding.clothingTag.text = collection.tag
     }
+
     fun downloadPhoto(photoTitle: String): Bitmap? {
 
         var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")

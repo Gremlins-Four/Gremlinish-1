@@ -44,6 +44,7 @@ class CollectionViewFragment: Fragment() {
     private lateinit var binding: FragmentCollectionviewBinding
     //Test function variable
     private var adapter: CollectionAdapter? = null
+    private var counter: Int = 0
 
     /**
      * Required interface for hosting activities
@@ -95,14 +96,16 @@ class CollectionViewFragment: Fragment() {
 
         // This produces a grid of clothing from the database.
         if(firstLoad == true) {
+
             firstLoad = false
             getData()
 
         }
+        dummyData()
             val CollectionViewFragment = this
             // This binds the data from the database to the clothing_item.xml
             binding.collectionRecyclerView.apply {
-                layoutManager = GridLayoutManager(context, 3)
+                layoutManager = GridLayoutManager(context, 4)
                 adapter = CollectionAdapter(collectionList)
             }
 
@@ -110,6 +113,88 @@ class CollectionViewFragment: Fragment() {
     } //End of onCreateView()
 
     //This function pulls data from the database for the CollectionView.
+    private fun dummyData(){
+        for(position in collectionList.indices) {
+            if (collectionList[position].title == "blue hat") {
+                collectionList[position].imageC = R.drawable.boots
+                counter++
+            } else if (collectionList[position].title == "Graphic Tee") {
+                collectionList[position].imageC = R.drawable.graphictee
+                counter++
+            } else if (collectionList[position].title == "Boots") {
+                collectionList[position].imageC = R.drawable.boots
+                counter++
+            } else if (collectionList[position].title == "Bro Tank") {
+                collectionList[position].imageC = R.drawable.brotank
+                counter++
+            } else if (collectionList[position].title == "Bucket Hat") {
+                collectionList[position].imageC = R.drawable.buckethat
+                counter++
+            } else if (collectionList[position].title == "Cheese Head") {
+                collectionList[position].imageC = R.drawable.cheesehead
+                counter++
+            } else if (collectionList[position].title == "Converse") {
+                collectionList[position].imageC = R.drawable.converse
+                counter++
+            } else if (collectionList[position].title == "Crocs") {
+                collectionList[position].imageC = R.drawable.crocs
+                counter++
+            } else if (collectionList[position].title == "Dad Sandals") {
+                collectionList[position].imageC = R.drawable.dadsandals
+                counter++
+            } else if (collectionList[position].title == "Dress Shirt") {
+                collectionList[position].imageC = R.drawable.dressshirt
+                counter++
+            } else if (collectionList[position].title == "Hammer Pants") {
+                collectionList[position].imageC = R.drawable.hammerpants
+                counter++
+            } else if (collectionList[position].title == "Helmet") {
+                collectionList[position].imageC = R.drawable.helmet
+                counter++
+            } else if (collectionList[position].title == "High Heels") {
+                collectionList[position].imageC = R.drawable.highheels
+                counter++
+            } else if (collectionList[position].title == "Jorts") {
+                collectionList[position].imageC = R.drawable.jorts
+                counter++
+            } else if (collectionList[position].title == "Khakis") {
+                collectionList[position].imageC = R.drawable.khakis
+                counter++
+            } else if (collectionList[position].title == "New Balance") {
+                collectionList[position].imageC = R.drawable.newb
+                counter++
+            } else if (collectionList[position].title == "Pirate Shirt") {
+                collectionList[position].imageC = R.drawable.pirate
+                counter++
+            } else if (collectionList[position].title == "Pajama Pants") {
+                collectionList[position].imageC = R.drawable.pjpants
+                counter++
+            } else if (collectionList[position].title == "Red Shirt") {
+                collectionList[position].imageC = R.drawable.redshirt
+                counter++
+            } else if (collectionList[position].title == "Sweatshirt") {
+                collectionList[position].imageC = R.drawable.sweatshirt
+            } else if (collectionList[position].title == "Tanktop") {
+                collectionList[position].imageC = R.drawable.tanktop
+            } else if (collectionList[position].title == "Twins Baseball Hat") {
+                collectionList[position].imageC = R.drawable.twinshat
+            } else if (collectionList[position].title == "Viking") {
+                collectionList[position].imageC = R.drawable.viking
+            } else if (collectionList[position].title == "White Jeans") {
+                collectionList[position].imageC = R.drawable.whitejeans
+            } else if (collectionList[position].title == "Winter Hat") {
+                collectionList[position].imageC = R.drawable.winterhat
+            } else if (collectionList[position].title == "Louis shirt") {
+                collectionList[position].imageC = R.drawable.louisshirt
+            } else if (collectionList[position].title == "Sandy pants") {
+                collectionList[position].imageC = R.drawable.sandypants
+            } else if (collectionList[position].title == "Blue hat") {
+                collectionList[position].imageC = R.drawable.bluehat
+            }else {
+                collectionList[position].imageC = R.drawable.buckethat
+            }
+        }
+    }
     private fun getData(){
         database2 = FirebaseFirestore.getInstance()
         database2.collection("sampleData").addSnapshotListener(object:
@@ -168,3 +253,5 @@ class CollectionViewFragment: Fragment() {
 
     //}
 }
+
+
