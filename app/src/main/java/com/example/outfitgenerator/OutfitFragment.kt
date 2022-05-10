@@ -16,6 +16,7 @@ import com.example.outfitgenerator.databinding.FragmentOutfitBinding
 import com.google.firebase.firestore.*
 import kotlin.collections.Collection
 
+private var firstload=true
 class OutfitFragment: Fragment() {
 
     private lateinit var outfitButton: Button
@@ -24,6 +25,7 @@ class OutfitFragment: Fragment() {
     private lateinit var binding: FragmentOutfitBinding
     private lateinit var outfitRecyclerView: RecyclerView
     private lateinit var database2: FirebaseFirestore
+
 
     interface Callbacks {
         fun startPhotoFragment()
@@ -50,11 +52,14 @@ class OutfitFragment: Fragment() {
     ): View? {
         binding= FragmentOutfitBinding.inflate(layoutInflater)
         val view = binding.root
+
+        //initialize buttons
         outfitButton=view.findViewById(R.id.outfit_outfits_button)
         itemsButton=view.findViewById(R.id.outfit_items_button)
         xButton=view.findViewById(R.id.outfit_x)
         outfitRecyclerView=view.findViewById((R.id.outfitRecyclerView))
 
+        //on click listener buttons
         outfitButton.setOnClickListener{
            //do nothing, you're already here
         }
@@ -66,8 +71,14 @@ class OutfitFragment: Fragment() {
         xButton.setOnClickListener{
             callbacks?.startFirstFragment()
         }
-        getData()
+        //fix duplication error
+        if (firstload){
+            firstload=false
+            dummyData()
+        }
+
         val OutfitFragment = this
+        //apply recycler view so card view works
         binding.outfitRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 4)
             adapter = OutfitAdapter(savedOutfitList)
@@ -95,6 +106,18 @@ class OutfitFragment: Fragment() {
         })
 
     } //End of getData()
+
+    private fun dummyData(){
+        //set outfit values, add to saved outfit list
+        val outfit1= SavedOutfit(R.drawable.bluehat, R.drawable.brotank, R.drawable.hammerpants, R.drawable.boots)
+        savedOutfitList.add(outfit1)
+        val outfit2= SavedOutfit(R.drawable.twinshat, R.drawable.dressshirt,R.drawable.jorts, R.drawable.newb)
+        savedOutfitList.add(outfit2)
+        val outfit3= SavedOutfit(R.drawable.helmet, R.drawable.pirate, R.drawable.whitejeans, R.drawable.highheels)
+        savedOutfitList.add(outfit3)
+        val outfit4= SavedOutfit(R.drawable.cheesehead, R.drawable.graphictee, R.drawable.khakis,R.drawable.converse)
+        savedOutfitList.add(outfit4)
+    }
 
     override fun onStart() {
         super.onStart()

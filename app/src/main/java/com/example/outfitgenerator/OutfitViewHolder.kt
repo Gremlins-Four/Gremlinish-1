@@ -9,9 +9,10 @@ class OutfitViewHolder(
 {
     fun bindSavedOutfit(savedOutfit: SavedOutfit)
     {
-        outfitBinding.hatImage
-        outfitBinding.shirtImage
-        outfitBinding.pantsImage
-        outfitBinding.shoesImage
+        //binds image resources to the outfit for card view
+        outfitBinding.hatImage.setImageResource(savedOutfit.hatImage as Int)
+        outfitBinding.shirtImage.setImageResource(savedOutfit.shirtImage as Int)
+        outfitBinding.pantsImage.setImageResource(savedOutfit.pantsImage as Int)
+        outfitBinding.shoesImage.setImageResource(savedOutfit.shoesImage as Int)
     }
 }

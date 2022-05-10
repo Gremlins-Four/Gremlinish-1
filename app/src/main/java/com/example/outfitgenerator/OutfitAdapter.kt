@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.outfitgenerator.databinding.OutfitBinding
 
+//adapter for card view for outfits
 class OutfitAdapter (private val savedOutfits: List<SavedOutfit>)
     :RecyclerView.Adapter<OutfitViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutfitViewHolder {
