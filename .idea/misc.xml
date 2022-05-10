@@ -3,35 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.16354166666666667" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/activity_detail.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/clothing_item.xml" value="0.1" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_collectionview.xml" value="0.1" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_first.xml" value="0.1" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_outfit.xml" value="0.1408514492753623" />
-        <entry key="..\:/Users/Grant/AndroidStudioProjects/Gremlinish-1/app/src/main/res/layout/fragment_photo.xml" value="0.1408514492753623" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_solved.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-port/camera_fragment.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-port/fragment_camera.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/activity_image_detail.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28609924316406254" />
-        <entry key="app/src/main/res/layout/activity_outfit_detail.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/card_layout.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/layout/clothing_item.xml" value="0.1585144927536232" />
-        <entry key="app/src/main/res/layout/detail_outfit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_collectionview.xml" value="0.1" />
-
-        <entry key="app/src/main/res/layout/fragment_crime.xml" value="0.24592391304347827" />
-        <entry key="app/src/main/res/layout/fragment_crime_list.xml" value="0.24592391304347827" />
-        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.1740891166355299" />
-        <entry key="app/src/main/res/layout/fragment_outfit.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_collectionview.xml" value="0.12092391304347826" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.18355407714843752" />
+        <entry key="app/src/main/res/layout/fragment_outfit.xml" value="0.23052536231884058" />
         <entry key="app/src/main/res/layout/fragment_photo.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/list_item_crime.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/outfit.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/fragment_crime_list.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/xml/files.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/outfit.xml" value="0.23052536231884058" />
       </map>
     </option>
   </component>

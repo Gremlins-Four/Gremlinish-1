@@ -25,14 +25,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/jorts"
+                android:src="@drawable/bluehat"
                 android:contentDescription="@string/clothing_image"/>
             <ImageView
                 android:id="@+id/shirt_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/jorts"
+                android:src="@drawable/dressshirt"
                 android:contentDescription="@string/clothing_image"/>
             <ImageView
                 android:id="@+id/pants_image"
@@ -46,7 +46,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/jorts"
+                android:src="@drawable/newb"
                 android:contentDescription="@string/clothing_image"/>
 
         </LinearLayout>
