@@ -36,9 +36,6 @@ class FirstFragment: Fragment() {
     var outfitList = listOf(null)
 
 
-    //val context = this
-
-
     /**
      * Required interface for hosting activities
      */
@@ -68,7 +65,7 @@ class FirstFragment: Fragment() {
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_first, container, false)
 
-        //uploadbutton = view.findViewById(R.id.upload_button)
+        // Enable buttons
         collectionbutton = view.findViewById(R.id.closet_button)
         randombutton = view.findViewById(R.id.random_button)
         saveoutfitbutton = view.findViewById(R.id.save_outfit_button)
@@ -80,11 +77,10 @@ class FirstFragment: Fragment() {
         val pantsImageView: ImageView = view.findViewById(R.id.temp_pants_text)
         val shoesImageView: ImageView = view.findViewById(R.id.temp_shoes_text)
 
+        // Create value for database
         val dbHelper = DBHandler(requireActivity())
-        //val db = dbHelper.readableDatabase
-        val hello = 2
 
-
+        // List of dummy data images for hats
         val hatList= listOf(
             "buckethat",
             "helmet",
@@ -93,7 +89,7 @@ class FirstFragment: Fragment() {
             "viking",
             "cheesehead",
         )
-
+        // List of dummy data images for shirts
         val shirtList= listOf(
             "dressshirt",
             "graphictee",
@@ -102,7 +98,7 @@ class FirstFragment: Fragment() {
             "brotank",
             "pirate"
         )
-
+        // List of dummy data images for pants
         val pantsList= listOf(
             "khakis",
             "pjpants",
@@ -111,7 +107,7 @@ class FirstFragment: Fragment() {
             "whitejeans",
             "hammerpants"
         )
-
+        // List of dummy data images for shoes
         val shoesList=listOf(
             "boots",
             "converse",
@@ -121,6 +117,8 @@ class FirstFragment: Fragment() {
             "dadsandals"
         )
 
+        // Function to generate a random number within the hats list
+        // to later display that specified image (using dummy data)
         fun randomizeHats(): Int {
             val hatContext: Context = hatImageView.getContext()
             var randomHats = Random.nextInt(0,5)
@@ -137,6 +135,8 @@ class FirstFragment: Fragment() {
             return hatsId
         }
 
+        // Function to generate a random number within the shirts list
+        // to later display that specified image (using dummy data)
         fun randomizeShirt(): Int{
             val shirtContext: Context = shirtImageView.getContext()
             var randomShirts = Random.nextInt(0,5)
@@ -154,6 +154,8 @@ class FirstFragment: Fragment() {
 
         }
 
+        // Function to generate a random number within the pants list
+        // to later display that specified image (using dummy data)
         fun randomizePants(): Int{
             val pantsContext: Context = pantsImageView.getContext()
             var randomPants = Random.nextInt(0,5)
@@ -170,6 +172,8 @@ class FirstFragment: Fragment() {
             return pantsId
         }
 
+        // Function to generate a random number within the shoes list
+        // to later display that specified image (using dummy data)
         fun randomizeShoes(): Int{
             val shoesContext: Context = shoesImageView.getContext()
             var randomShoes = Random.nextInt(0,5)
@@ -188,8 +192,8 @@ class FirstFragment: Fragment() {
         }
 
 
-        //ImageView containers
-        //Outfit Generator
+        // Set an onClickListener that uses the randomize function for each category
+        // of clothing and displays the chosen image
         randombutton.setOnClickListener {
             val hat = randomizeHats()
             val shirt = randomizeShirt()
@@ -204,17 +208,19 @@ class FirstFragment: Fragment() {
         }
 
 
+        // Use callbacks to navigate to the Collection View Fragment
         collectionbutton.setOnClickListener { // This button opens the CollectionViewFragment.
             callbacks?.startCollectionViewFragment()
         }
-        saveoutfitbutton.setOnClickListener { //This button takes the images in the imageviews and sends them as one object(Outfit) to the database.
+
+
+        saveoutfitbutton.setOnClickListener {
+            //This button takes the images in the imageviews and sends them as one object(Outfit) to the database.
             //saveOutfitToDatabase(uriHat, uriShirt, uriPants, uriShoes)
             var saveClothing = listOf(hatImageView, shirtImageView, pantsImageView, shoesImageView)
             outfitList.plus(saveClothing)
         }
-        //uploadbutton.setOnClickListener {
-        //    callbacks?.startPhotoFragment()
-        //}
+
         return view
 
     } //End onCreateView
@@ -223,7 +229,9 @@ class FirstFragment: Fragment() {
         super.onDetach()
         callbacks = null
     }
+
     val database = FirebaseFirestore.getInstance()
+
     fun saveOutfitToDatabase(uriHat: String, uriShirt: String, uriPants: String, uriShoes: String){
         val newOutfit = hashMapOf("HatImage" to uriHat, "ShirtImage" to uriShirt, "PantsImage" to uriPants, "ShoesImage" to uriShoes)
         database.collection("outfits")
@@ -238,6 +246,8 @@ class FirstFragment: Fragment() {
         toast3.show()
     }
 
+
+    // Retrieve the photo from the database
     fun downloadPhoto(photoTitle: String): Bitmap? {
 
         var mStorageReference = FirebaseStorage.getInstance().reference.child("pictures/$photoTitle")

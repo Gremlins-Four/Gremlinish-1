@@ -124,8 +124,6 @@ open class PhotoFragment: Fragment() {
         //saves title to firestore, thats about it
         fun saveToDatabase() {
 
-
-
             val clothingTitle = titleField.getText().toString()
             val clothingTag = tagItem
 
@@ -152,7 +150,8 @@ open class PhotoFragment: Fragment() {
 
 
 
-
+        // Create spinner and set it's position to the selected value in order to save
+        // an item to the proper SQL table
         spinner?.adapter = ArrayAdapter.createFromResource(requireActivity(), R.array.dropdownmenu, android.R.layout.simple_spinner_item) as SpinnerAdapter
         spinner?.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
 
@@ -167,12 +166,13 @@ open class PhotoFragment: Fragment() {
 
 
 
-
+        // Return to main screen
         cancelbutton.setOnClickListener {
             callbacks?.startCollectionViewFragment()
             // Return to main layout
         }
 
+        // Save the selected image to database when clicked
         savebutton.setOnClickListener {
             // saveToDatabase()
             val clothingTitle = titleField.text.toString()
@@ -180,7 +180,7 @@ open class PhotoFragment: Fragment() {
 
         }
 
-
+        // Open a file path to select an image from the user's device
         insertbutton.setOnClickListener {
             val galleryIntent =
                 Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
