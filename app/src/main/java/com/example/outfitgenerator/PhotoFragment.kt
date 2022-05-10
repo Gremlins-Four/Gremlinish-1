@@ -78,7 +78,7 @@ open class PhotoFragment: Fragment() {
         super.onAttach(context)
         callbacks = context as Callbacks?
     }
-
+    // Creates the layout
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = inflater.inflate(R.layout.fragment_photo, container, false)
