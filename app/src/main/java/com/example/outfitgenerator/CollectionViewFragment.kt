@@ -35,6 +35,7 @@ private const val TAG = "CollectionViewFragment"
 private lateinit var uploadbutton: FloatingActionButton
 
 private var firstLoad = true //Fix for data duplication error
+// This function presents the collection of clothing items.
 class CollectionViewFragment: Fragment() {
     private lateinit var database2: FirebaseFirestore
     private lateinit var collectionRecyclerView: RecyclerView
@@ -62,14 +63,11 @@ class CollectionViewFragment: Fragment() {
     } //End of Callbacks Code
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View? { //
         binding = FragmentCollectionviewBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
@@ -94,8 +92,8 @@ class CollectionViewFragment: Fragment() {
             callbacks?.startOutfitFragment()
         }
 
-        // This produces a grid of clothing from the database.
-        if(firstLoad == true) {
+
+        if(firstLoad == true) { // Ensures data is only pulled once(NO DUPLICATION!)
 
             firstLoad = false
             getData()
@@ -105,15 +103,15 @@ class CollectionViewFragment: Fragment() {
             val CollectionViewFragment = this
             // This binds the data from the database to the clothing_item.xml
             binding.collectionRecyclerView.apply {
-                layoutManager = GridLayoutManager(context, 4)
+                layoutManager = GridLayoutManager(context, 4) // This produces a grid of clothing from the database.
                 adapter = CollectionAdapter(collectionList)
             }
 
         return view
     } //End of onCreateView()
 
-    //This function pulls data from the database for the CollectionView.
-    private fun dummyData(){
+
+    private fun dummyData(){ // Creates dummy data images to be entered with the title and tag pulled from the database.
         for(position in collectionList.indices) {
             if (collectionList[position].title == "blue hat") {
                 collectionList[position].imageC = R.drawable.boots
@@ -195,6 +193,7 @@ class CollectionViewFragment: Fragment() {
             }
         }
     }
+    //This function pulls data from the database for the CollectionView.
     private fun getData(){
         database2 = FirebaseFirestore.getInstance()
         database2.collection("sampleData").addSnapshotListener(object:
